@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background">
+
+    <com.relayr.cannottouchthis.widget.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_back"
+        android:background="@android:color/black"
+        android:text="@string/action_settings"
+        app:font="MavenPro-Black.ttf"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:gravity="center_vertical"
+        android:drawablePadding="18dp"
+        android:padding="18dp"
+        android:onClick="onBackClick"
+        android:clickable="true"
+        android:enabled="true"/>
+
+    <com.relayr.cannottouchthis.widget.CustomSwitch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alarm"
+        app:font="MavenPro-Black.ttf"
+        android:textColor="@android:color/white"
+        android:id="@+id/switch1"
+        android:textSize="22sp"
+        android:checked="true"
+        android:layout_marginTop="40dp"
+        android:padding="18dp"/>
+
+
+    <com.relayr.cannottouchthis.widget.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        app:font="MavenPro-Black.ttf"
+        android:layout_marginTop="40dp"
+        android:text="@string/alarm_threshold"
+        android:textColor="@android:color/white"
+        android:padding="18dp"/>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="18dp"/>
+
+    <com.relayr.cannottouchthis.widget.CustomButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:background="@drawable/button_white"
+        android:text="@string/reassign_sensor"
+        android:layout_gravity="center_vertical"
+        app:font="MavenPro-Black.ttf"
+        android:onClick="onBackClick"/>
+
+</LinearLayout>
