@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/red_background">
@@ -15,46 +14,46 @@
         android:layout_gravity="right"
         android:onClick="onSettingsClick"/>
 
-    <com.relayr.cannottouchthis.widget.CustomTextView
+    <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ALARM!"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:textSize="65sp"
         android:paddingTop="40dp"
         android:layout_gravity="center"/>
 
-    <com.relayr.cannottouchthis.widget.CustomTextView
+    <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SOMEONE"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:textColor="@android:color/white"
         android:textSize="50sp"
         android:layout_gravity="center"/>
 
-    <com.relayr.cannottouchthis.widget.CustomTextView
+    <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HAS TOUCHED YOUR"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:textColor="@android:color/white"
         android:textSize="25sp"
         android:layout_gravity="center"/>
 
-    <com.relayr.cannottouchthis.widget.CustomTextView
+    <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CELLO"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="80sp"
         android:layout_gravity="center"/>
 
-    <com.relayr.cannottouchthis.widget.CustomButton
+    <com.relayr.commons.widget.CustomButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -64,7 +63,7 @@
         android:textColor="@android:color/white"
         android:text="@string/dismiss"
         android:gravity="center_vertical"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:onClick="onBackClick"/>
 
 

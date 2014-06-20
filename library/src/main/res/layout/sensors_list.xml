@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -11,9 +10,9 @@
     android:background="@android:color/black"
     android:orientation="vertical">
 
-    <com.relayr.cannottouchthis.widget.CustomTextView
+    <com.relayr.commons.widget.CustomTextView
         android:text="@string/select_accel"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -21,11 +20,11 @@
         android:textSize="24sp"
         android:textColor="@android:color/white"/>
 
-    <com.relayr.cannottouchthis.widget.CustomTextView
+    <com.relayr.commons.widget.CustomTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sensor 1"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:background="@color/gray_background"
         android:textColor="@color/gray_even_lighter_text"
         android:textSize="18sp"
@@ -36,11 +35,11 @@
         android:clickable="true"/>
 
 
-    <com.relayr.cannottouchthis.widget.CustomTextView
+    <com.relayr.commons.widget.CustomTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sensor 2"
-        app:font="MavenPro-Black.ttf"
+        style="@style/BoldText"
         android:background="@color/gray_background"
         android:textColor="@color/gray_even_lighter_text"
         android:textSize="18sp"
