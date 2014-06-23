@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_background">
+
+    <com.relayr.commons.widget.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_object_title"
+        android:background="@android:color/black"
+        android:text="@string/protected_object"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:paddingLeft="35dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etxt_object_name"
+        android:layout_margin="18dp"
+        android:hint="@string/name_of_object"
+        android:textSize="22sp"
+        android:background="@android:color/white"
+        android:padding="20dp"/>
+
+    <com.relayr.commons.widget.CustomTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="18dp"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:textColor="@android:color/white"
+        android:text="@string/what_are_you_protecting"/>
+
+    <com.relayr.commons.widget.CustomButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="18dp"
+        android:text="@string/done"
+        android:textAllCaps="true"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:onClick="onDoneClicked"
+        android:enabled="true"
+        android:clickable="true"
+        style="@style/BoldText"
+        android:background="@drawable/button_white"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>
