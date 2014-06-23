@@ -7,7 +7,14 @@
     <string name="select_accel">Select Accelerator</string>
     <string name="alarm">Alarm</string>
     <string name="alarm_threshold">Alarm Threshold</string>
-    <string name="dismiss">DISMISS</string>
-    <string name="reassign_sensor">RE-ASSIGN SENSOR</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="reassign_sensor">Re-Assign sensor</string>
+    <string name="protected_object">Protected object</string>
+    <string name="what_are_you_protecting">What is it you\'re protecting?</string>
+    <string name="name_of_object">Name of object</string>
+    <string name="done">Done</string>
+    <string name="alarm_exclamation">Alarm!</string>
+    <string name="someone">Someone</string>
+    <string name="touched_your">Touched your</string>
 
 </resources>

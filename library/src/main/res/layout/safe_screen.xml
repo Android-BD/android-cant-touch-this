@@ -27,6 +27,7 @@
     <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/txt_object_name"
         android:text="CELLO"
         style="@style/BoldText"
         android:textColor="@android:color/white"
@@ -42,7 +43,7 @@
         android:textSize="70sp"
         android:layout_gravity="center"/>
 
-    <TextView
+    <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SAFE"

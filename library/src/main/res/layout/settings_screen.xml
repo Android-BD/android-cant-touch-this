@@ -59,9 +59,13 @@
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
         android:background="@drawable/button_white"
+        android:gravity="center"
         android:text="@string/reassign_sensor"
+        android:textAllCaps="true"
         android:layout_gravity="center_vertical"
+        android:enabled="true"
+        android:clickable="true"
         style="@style/BoldText"
-        android:onClick="onBackClick"/>
+        android:onClick="onReAssignSensorClick"/>
 
 </LinearLayout>

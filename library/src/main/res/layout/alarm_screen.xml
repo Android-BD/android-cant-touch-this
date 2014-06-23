@@ -17,7 +17,8 @@
     <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ALARM!"
+        android:text="@string/alarm_exclamation"
+        android:textAllCaps="true"
         style="@style/BoldText"
         android:textStyle="bold"
         android:textColor="@android:color/white"
@@ -28,7 +29,8 @@
     <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SOMEONE"
+        android:textAllCaps="true"
+        android:text="@string/someone"
         style="@style/BoldText"
         android:textColor="@android:color/white"
         android:textSize="50sp"
@@ -37,7 +39,8 @@
     <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HAS TOUCHED YOUR"
+        android:text="@string/touched_your"
+        android:textAllCaps="true"
         style="@style/BoldText"
         android:textColor="@android:color/white"
         android:textSize="25sp"
@@ -46,6 +49,7 @@
     <com.relayr.commons.widget.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/txt_object_name"
         android:text="CELLO"
         style="@style/BoldText"
         android:textColor="@android:color/white"
@@ -61,10 +65,12 @@
         android:layout_marginRight="60dp"
         android:background="@drawable/button_white"
         android:textColor="@android:color/white"
+        android:gravity="center"
         android:text="@string/dismiss"
-        android:gravity="center_vertical"
         style="@style/BoldText"
-        android:onClick="onBackClick"/>
+        android:onClick="onBackClick"
+        android:enabled="true"
+        android:clickable="true"/>
 
 
 </LinearLayout>
