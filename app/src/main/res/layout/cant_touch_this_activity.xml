@@ -8,7 +8,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".CantTouchThisActivity"
     android:background="@android:color/black"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:animateLayoutChanges="true">
 
     <io.relayr.commons.widget.CustomTextView
         android:layout_alignParentTop="true"

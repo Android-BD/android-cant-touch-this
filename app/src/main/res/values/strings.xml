@@ -3,30 +3,36 @@
 
     <string name="app_name">Can\'t touch this</string>
 
-    <string name="action_log_in">Log in</string>
-    <string name="action_log_out">Log out</string>
+    <!--CantTouchThisActivity-->
+    <string name="ctta_title_select_accel">Select Accelerator</string>
+    <string name="ctta_empty_sensor_list">You don\'t have an accelerometer</string>
     <string name="successfully_logged_in">You were successfully logged in!</string>
-    <string name="successfully_logged_out">You were successfully logged out!</string>
     <string name="unsuccessfully_logged_in">There was a problem in the log in.</string>
     <string name="something_went_wrong">Oops! Something went wrong</string>
 
+    <!--DeviceNameActivity-->
+    <string name="dna_what_are_you_protecting">What is it you\'re protecting?</string>
+    <string name="dna_title_protected_object">Protected object</string>
+    <string name="dna_object_name">Name of object</string>
+    <string name="dna_dialog_title">Name error</string>
+    <string name="dna_dialog_message">Object name can not be empty.</string>
 
-    <string name="action_settings">Settings</string>
-    <string name="ctta_title_select_accel">Select Accelerator</string>
-    <string name="alarm">Alarm</string>
-    <string name="alarm_threshold">Alarm Threshold</string>
+    <!--SettingsActivity-->
+    <string name="sa_title_settings">Settings</string>
+    <string name="sa_alarm_threshold">Alarm Threshold</string>
+    <string name="sa_reassign_sensor">Re-Assign sensor</string>
+    <string name="sa_switch_sound">Sound</string>
+    <string name="sa_switch_alarm">Alarm</string>
+
+    <!--AlarmActivity-->
+    <string name="aa_alarm_exclamation">Alarm!</string>
+    <string name="aa_someone">Someone</string>
+    <string name="aa_touched_your">Touched your</string>
+
+    <string name="sensor_name_prefix">Sensor </string>
+
     <string name="dismiss">Dismiss</string>
-    <string name="reassign_sensor">Re-Assign sensor</string>
-    <string name="protected_object">Protected object</string>
-    <string name="what_are_you_protecting">What is it you\'re protecting?</string>
-    <string name="name_of_object">Name of object</string>
     <string name="done">Done</string>
-    <string name="alarm_exclamation">Alarm!</string>
-    <string name="someone">Someone</string>
-    <string name="touched_your">Touched your</string>
-    <string name="ctta_empty_sensor_list">You don\'t have an accelerometer</string>
-    <string name="sna_dialog_title">Name error</string>
-    <string name="sna_dialog_message">Object name can not be empty.</string>
     <string name="ok">OK</string>
 
 </resources>

@@ -11,5 +11,4 @@
     android:clickable="false"
     android:gravity="center_horizontal"
     android:focusable="false"
-    android:focusableInTouchMode="false"
-    />
+    android:focusableInTouchMode="false" />

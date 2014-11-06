@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/sensor_name_title_background"
-        android:text="@string/protected_object"
+        android:text="@string/dna_title_protected_object"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:gravity="center"
@@ -19,9 +19,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sna_sensor_name_et"
+        android:id="@+id/dna_sensor_name_et"
         android:layout_margin="20dp"
-        android:hint="@string/name_of_object"
+        android:hint="@string/dna_object_name"
         android:textSize="22sp"
         android:background="@android:color/white"
         android:gravity="center"
@@ -34,7 +34,7 @@
         android:gravity="center"
         android:textSize="22sp"
         android:textColor="@android:color/white"
-        android:text="@string/what_are_you_protecting" />
+        android:text="@string/dna_what_are_you_protecting" />
 
     <io.relayr.commons.widget.CustomButton
         android:layout_width="match_parent"
