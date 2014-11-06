@@ -14,11 +14,15 @@ public class SettingsActivity extends Activity {
 
     private final int SENSOR_REASSIGN_RESULT = 12;
 
+    private SeekBar mVolumeSeek;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.settings_activity);
+
+        mVolumeSeek = (SeekBar) findViewById(R.id.sa_volume_seek_bar);
     }
 
     @Override
@@ -33,6 +37,23 @@ public class SettingsActivity extends Activity {
 
         Switch mSoundSwitch = (Switch) findViewById(R.id.sa_sound_switch);
         mSoundSwitch.setChecked(Database.isSoundAlarm());
+
+        mVolumeSeek.setProgress(Database.getSoundVolume());
+        mVolumeSeek.setEnabled(Database.isSoundAlarm());
+        mVolumeSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                Database.setSoundVolume(seekBar.getProgress());
+            }
+        });
 
         SeekBar mThresholdSeek = (SeekBar) findViewById(R.id.sa_threshold_seek_bar);
         mThresholdSeek.setProgress(Database.getThreshold());
@@ -72,7 +93,9 @@ public class SettingsActivity extends Activity {
      * Called from the xml
      */
     public void onSoundSwitchClick(View view) {
-        Database.setSoundAlarm(((Switch) view).isChecked());
+        boolean checked = ((Switch) view).isChecked();
+        Database.setSoundAlarm(checked);
+        mVolumeSeek.setEnabled(checked);
     }
 
     /**

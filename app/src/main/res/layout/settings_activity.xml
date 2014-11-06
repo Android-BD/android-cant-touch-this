@@ -32,7 +32,7 @@
         android:textSize="22sp"
         android:checked="true"
         android:onClick="onAlarmSwitchClick"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:padding="18dp" />
 
     <Switch
@@ -47,6 +47,15 @@
         android:onClick="onSoundSwitchClick"
         android:layout_marginTop="20dp"
         android:padding="18dp" />
+
+    <SeekBar
+        android:id="@+id/sa_volume_seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_gravity="center_horizontal"
+        android:max="10" />
 
     <io.relayr.commons.widget.CustomTextView
         android:layout_width="match_parent"

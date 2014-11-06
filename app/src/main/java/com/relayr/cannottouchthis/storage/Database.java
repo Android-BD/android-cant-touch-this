@@ -3,6 +3,8 @@ package com.relayr.cannottouchthis.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.relayr.cannottouchthis.util.SensitivityUtil;
+
 import io.relayr.model.Device;
 
 public class Database {
@@ -14,6 +16,9 @@ public class Database {
     private static final String SETTINGS_ALARM_ON = "sett_alarm_on";
     private static final String SETTINGS_SOUND_ON = "sett_alarm_sound_on";
     private static final String SETTINGS_ALARM_THRESHOLD = "sett_alarm_threshold";
+    private static final String SETTINGS_SOUND_VOLUME = "sett_sound_volume";
+
+    public static final int MAX_THRESHOLD = 10;
 
     private static SharedPreferences mDatabase = null;
 
@@ -76,11 +81,33 @@ public class Database {
 
     public static void setThreshold(int th) {
         SharedPreferences.Editor editor = mDatabase.edit();
-        editor.putInt(SETTINGS_ALARM_THRESHOLD, 10 - th);
+        editor.putInt(SETTINGS_ALARM_THRESHOLD, th);
         editor.apply();
+
+        SensitivityUtil.thresholdChanged();
     }
 
     public static int getThreshold() {
-        return mDatabase.getInt(SETTINGS_ALARM_THRESHOLD, 5);
+        return mDatabase.getInt(SETTINGS_ALARM_THRESHOLD, MAX_THRESHOLD / 2);
+    }
+
+    public static void setSoundVolume(int volume) {
+        SharedPreferences.Editor editor = mDatabase.edit();
+        editor.putInt(SETTINGS_SOUND_VOLUME, volume);
+        editor.apply();
+    }
+
+    public static int getSoundVolume() {
+        return mDatabase.getInt(SETTINGS_SOUND_VOLUME, 2);
+    }
+
+    public static float getVolume() {
+        int volume = getSoundVolume();
+
+        if (volume == 0) {
+            return 0f;
+        } else {
+            return volume / 10f;
+        }
     }
 }

@@ -1,7 +1,5 @@
 package com.relayr.cannottouchthis.util;
 
-import android.util.Log;
-
 import com.relayr.cannottouchthis.storage.Database;
 
 import io.relayr.model.Reading;
@@ -12,7 +10,16 @@ public class SensitivityUtil {
     private static int mThreshold;
 
     static {
+       thresholdChanged();
+    }
+
+    public static void thresholdChanged(){
         mThreshold = Database.getThreshold();
+        if (mThreshold == Database.MAX_THRESHOLD) {
+            mThreshold = 1;
+        } else {
+            mThreshold = Database.MAX_THRESHOLD - mThreshold;
+        }
     }
 
     public static boolean isReadingChanged(Reading reading) {
@@ -24,13 +31,9 @@ public class SensitivityUtil {
             mPrevValue = value;
         }
 
-        Log.e("READING", "C: " + value + " P: " + mPrevValue);
+        boolean isAlarm = value < mPrevValue - mThreshold || value > mPrevValue + mThreshold;
+        mPrevValue = value;
 
-        if (value < mPrevValue - mThreshold || value > mPrevValue + mThreshold) {
-            return true;
-        } else {
-            mPrevValue = value;
-            return false;
-        }
+        return isAlarm;
     }
 }

@@ -3,7 +3,6 @@ package com.relayr.cannottouchthis.app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -177,7 +176,6 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
                     @Override
                     public void onNext(Object o) {
-                        Log.w("CTTA", "Reading");
                         Reading reading = new Gson().fromJson(o.toString(), Reading.class);
                         checkData(reading);
                     }

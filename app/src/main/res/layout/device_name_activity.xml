@@ -4,17 +4,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sensor_name_background">
+    android:background="@color/gray_background">
 
     <io.relayr.commons.widget.CustomTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/sensor_name_title_background"
+        android:background="@android:color/black"
         android:text="@string/dna_title_protected_object"
         android:textColor="@android:color/white"
         android:textSize="24sp"
-        android:gravity="center"
-        android:padding="20dp" />
+        android:paddingLeft="35dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="18dp"
+        android:gravity="center" />
 
     <EditText
         android:layout_width="match_parent"

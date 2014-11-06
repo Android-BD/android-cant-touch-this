@@ -26,12 +26,12 @@
             android:name=".app.AlarmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance" />
 
         <activity
             android:name=".app.DeviceNameActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Transparent"
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop" />
 

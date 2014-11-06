@@ -2,7 +2,6 @@ package com.relayr.cannottouchthis.app;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,8 +10,6 @@ import android.widget.TextView;
 
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
-
-import java.io.IOException;
 
 public class AlarmActivity extends Activity {
 
@@ -36,7 +33,7 @@ public class AlarmActivity extends Activity {
         if (Database.isSoundAlarm()) {
             mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.siren);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mMediaPlayer.setVolume(0.1f, 0.1f);
+            mMediaPlayer.setVolume(Database.getVolume(), Database.getVolume());
             mMediaPlayer.start();
         }
     }
