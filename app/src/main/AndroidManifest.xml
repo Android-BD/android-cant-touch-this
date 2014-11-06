@@ -1,23 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.relayr.cannottouchthis.app">
+    package="com.relayr.cannottouchthis">
 
-    <application android:allowBackup="true"
-        android:label="@string/app_name"
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/android:Theme.Holo.Light.NoActionBar">
+        android:label="@string/app_name"
+        android:name=".CantTouchThisApplication">
 
         <activity
-            android:name="com.relayr.cannottouchthis.SafeScreenActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name">
+            android:name=".app.CantTouchThisActivity"
+            android:label="@string/app_name"
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".app.AlarmActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar" />
 
+        <activity
+            android:name=".app.SensorNameActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".app.SafeScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".app.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar"
+            android:launchMode="singleTop" />
     </application>
 
 </manifest>

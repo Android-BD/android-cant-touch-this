@@ -1,17 +1,21 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.0"
 
     defaultConfig {
-        applicationId "com.relayr.cannottouchthis.app"
+        applicationId "com.relayr.cannottouchthis"
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
     buildTypes {
+        production {
+            debuggable true
+            signingConfig signingConfigs.debug
+        }
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -21,6 +25,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:19.+'
-    compile project(':library')
+    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'io.relayr:android-sdk:0.0.3'
+    compile project(':AndroidCommons:RelayrCommons')
 }

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="gray_background">#333</color>
-    <color name="gray_raw_background">#313534</color>
-    <color name="gray_text">#888888</color>
-    <color name="gray_lighter_text">#CCCCCC</color>
-    <color name="gray_even_lighter_text">#DDDDDD</color>
-    <color name="red_background">#EF4136</color>
-</resources>

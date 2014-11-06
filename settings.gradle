@@ -1,1 +1,1 @@
-include ':app', ':library', ':libraries:AndroidCommons:RelayrCommons'
+include ':app', ':AndroidCommons:RelayrCommons'
