@@ -29,8 +29,8 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view = (TextView) View.inflate(context, R.layout.cant_touch_this_list_device, null);
 
-        if (devices.get(position).id.equals(Database.getCurrentObjectId())) {
-            view.setText(Database.getCurrentObjectName());
+        if (devices.get(position).id.equals(Database.getObjectId())) {
+            view.setText(Database.getObjectName());
         } else {
             view.setText(context.getString(R.string.sensor_name_prefix) + position);
         }

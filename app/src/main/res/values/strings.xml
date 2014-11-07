@@ -16,6 +16,7 @@
     <string name="dna_object_name">Name of object</string>
     <string name="dna_dialog_title">Name error</string>
     <string name="dna_dialog_message">Object name can not be empty.</string>
+    <string name="dna_object_name_default">Object</string>
 
     <!--SettingsActivity-->
     <string name="sa_title_settings">Settings</string>
@@ -28,12 +29,12 @@
     <string name="aa_alarm_exclamation">Alarm!</string>
     <string name="aa_someone">Someone</string>
     <string name="aa_touched_your">Touched your</string>
+    <string name="sa_sound_volume">Volume</string>
 
     <string name="sensor_name_prefix">Sensor </string>
 
     <string name="dismiss">Dismiss</string>
     <string name="done">Done</string>
     <string name="ok">OK</string>
-    <string name="sa_sound_volume">Volume</string>
 
 </resources>

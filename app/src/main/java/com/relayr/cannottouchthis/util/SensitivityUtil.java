@@ -1,5 +1,6 @@
 package com.relayr.cannottouchthis.util;
 
+import com.relayr.cannottouchthis.RelayrSdkInitializer;
 import com.relayr.cannottouchthis.storage.Database;
 
 import io.relayr.model.Reading;
@@ -9,11 +10,14 @@ public class SensitivityUtil {
     private static float mPrevValue = -1f;
     private static int mThreshold;
 
+    //Used for filtering mocked accelerometer values in debug mode
+    private static int mDebugAlarmsCounter = 0;
+
     static {
-       thresholdChanged();
+        thresholdChanged();
     }
 
-    public static void thresholdChanged(){
+    public static void thresholdChanged() {
         mThreshold = Database.getThreshold();
         if (mThreshold == Database.MAX_THRESHOLD) {
             mThreshold = 1;
@@ -32,7 +36,22 @@ public class SensitivityUtil {
         }
 
         boolean isAlarm = value < mPrevValue - mThreshold || value > mPrevValue + mThreshold;
+
         mPrevValue = value;
+
+        //Hack for debug mode
+        //Mocked data is coming to fast for this demo so only every 50th alarm will be triggered
+        //Alarm will activate approximately every 25 seconds
+        if (RelayrSdkInitializer.isDebug() && isAlarm) {
+            mDebugAlarmsCounter++;
+
+            if (mDebugAlarmsCounter == 50) {
+                mDebugAlarmsCounter = 0;
+                return true;
+            }
+
+            return false;
+        }
 
         return isAlarm;
     }

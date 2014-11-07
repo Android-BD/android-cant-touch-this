@@ -33,19 +33,18 @@ public class Database {
     public static void setSensorData(Device device) {
         SharedPreferences.Editor editor = mDatabase.edit();
         editor.putString(SENSOR_ID, device.id);
-        editor.putString(OBJECT_NAME, "Object");
         editor.apply();
     }
 
-    public static String getCurrentObjectName() {
+    public static String getObjectName() {
         return mDatabase.getString(OBJECT_NAME, "");
     }
 
-    public static String getCurrentObjectId() {
+    public static String getObjectId() {
         return mDatabase.getString(SENSOR_ID, "");
     }
 
-    public static void changeSensorObjectName(String objectName) {
+    public static void setObjectName(String objectName) {
         SharedPreferences.Editor editor = mDatabase.edit();
         editor.putString(OBJECT_NAME, objectName);
         editor.apply();
@@ -56,7 +55,7 @@ public class Database {
     }
 
     public static boolean isDeviceSaved(Device device) {
-        return getCurrentObjectId().equals(device.id);
+        return getObjectId().equals(device.id);
     }
 
     public static void setAlarm(boolean isOn) {
@@ -88,7 +87,7 @@ public class Database {
     }
 
     public static int getThreshold() {
-        return mDatabase.getInt(SETTINGS_ALARM_THRESHOLD, MAX_THRESHOLD / 2);
+        return mDatabase.getInt(SETTINGS_ALARM_THRESHOLD, MAX_THRESHOLD - 2);
     }
 
     public static void setSoundVolume(int volume) {

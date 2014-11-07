@@ -24,6 +24,7 @@
         android:id="@+id/dna_sensor_name_et"
         android:layout_margin="20dp"
         android:hint="@string/dna_object_name"
+        android:text="@string/dna_object_name_default"
         android:textSize="22sp"
         android:background="@android:color/white"
         android:gravity="center"

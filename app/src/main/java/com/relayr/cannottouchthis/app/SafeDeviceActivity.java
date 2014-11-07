@@ -26,7 +26,7 @@ public class SafeDeviceActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        mObjectNameTV.setText(Database.getCurrentObjectName());
+        mObjectNameTV.setText(Database.getObjectName());
     }
 
     /** Called from the xml */

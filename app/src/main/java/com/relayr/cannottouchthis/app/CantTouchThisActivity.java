@@ -25,6 +25,7 @@ import io.relayr.model.Reading;
 import io.relayr.model.TransmitterDevice;
 import io.relayr.model.User;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -34,6 +35,12 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
     private ListView mSensorList;
     private List<Device> mAccelerometers = new ArrayList<Device>();
+    private int mSelectedSensor = -1;
+
+    private Subscription mUserInfoSubscription;
+    private Subscription mAccelDeviceSubscription;
+    private Subscription mWebSocketSubscription;
+    private TransmitterDevice mDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,29 +65,25 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         refreshSensorLayout(mAccelerometers.isEmpty());
     }
 
-    private void setSensorListLayout(ListView sensorList) {
-        sensorList.setAdapter(new DeviceAdapter(this, mAccelerometers));
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
-        sensorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (Database.isDeviceSaved(mAccelerometers.get(i))) {
-                    startActivity(new Intent(CantTouchThisActivity.this, SafeDeviceActivity.class));
-                } else {
-                    Database.setSensorData(mAccelerometers.get(i));
-
-                    startActivityForResult(new Intent(CantTouchThisActivity.this,
-                            DeviceNameActivity.class), SENSOR_NAME_RESULT);
-                }
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unSubscribeToUpdates();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (SENSOR_NAME_RESULT == requestCode) {
+        if (SENSOR_NAME_RESULT == requestCode && RESULT_OK == resultCode) {
+            Database.setSensorData(mAccelerometers.get(mSelectedSensor));
+
             startActivity(new Intent(this, SafeDeviceActivity.class));
         }
     }
@@ -96,8 +99,31 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         Toast.makeText(this, R.string.unsuccessfully_logged_in, Toast.LENGTH_SHORT).show();
     }
 
+    private void setSensorListLayout(ListView sensorList) {
+        sensorList.setAdapter(new DeviceAdapter(this, mAccelerometers));
+
+        sensorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (Database.isDeviceSaved(mAccelerometers.get(i))) {
+                    startActivity(new Intent(CantTouchThisActivity.this, SafeDeviceActivity.class));
+                } else {
+                    mSelectedSensor = i;
+
+                    startActivityForResult(new Intent(CantTouchThisActivity.this,
+                            DeviceNameActivity.class), SENSOR_NAME_RESULT);
+                }
+            }
+        });
+    }
+
+    private void refreshSensorLayout(boolean sensorsEmpty) {
+        findViewById(R.id.ctta_sensor_list).setVisibility(sensorsEmpty ? View.GONE : View.VISIBLE);
+        findViewById(R.id.ctta_empty_sensor_label).setVisibility(sensorsEmpty ? View.VISIBLE : View.GONE);
+    }
+
     private void loadUserInfo() {
-        RelayrSdk.getRelayrApi()
+        mUserInfoSubscription = RelayrSdk.getRelayrApi()
                 .getUserInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -120,7 +146,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void loadAccelerometerDevices(String userId) {
-        RelayrSdk.getRelayrApi()
+        mAccelDeviceSubscription = RelayrSdk.getRelayrApi()
                 .getUserDevices(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -157,11 +183,11 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void subscribeForAccelerometerUpdates(Device device) {
-        TransmitterDevice transmitterDevice = new TransmitterDevice(device.id, device.getSecret(),
+        mDevice = new TransmitterDevice(device.id, device.getSecret(),
                 device.getOwner(), device.getName(), device.getModel().getId());
 
-        RelayrSdk.getWebSocketClient()
-                .subscribe(transmitterDevice, new Subscriber<Object>() {
+        mWebSocketSubscription = RelayrSdk.getWebSocketClient()
+                .subscribe(mDevice, new Subscriber<Object>() {
 
                     @Override
                     public void onCompleted() {
@@ -187,13 +213,25 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
             return;
         }
 
-        if(SensitivityUtil.isReadingChanged(reading)){
+        if (SensitivityUtil.isReadingChanged(reading)) {
             startActivity(new Intent(CantTouchThisActivity.this, AlarmActivity.class));
         }
     }
 
-    private void refreshSensorLayout(boolean sensorsEmpty) {
-        findViewById(R.id.ctta_sensor_list).setVisibility(sensorsEmpty ? View.GONE : View.VISIBLE);
-        findViewById(R.id.ctta_empty_sensor_label).setVisibility(sensorsEmpty ? View.VISIBLE : View.GONE);
+    private void unSubscribeToUpdates() {
+        if (isSubscribed(mUserInfoSubscription)) {
+            mUserInfoSubscription.unsubscribe();
+        }
+        if (isSubscribed(mAccelDeviceSubscription)) {
+            mAccelDeviceSubscription.unsubscribe();
+        }
+        if (isSubscribed(mWebSocketSubscription)) {
+            mWebSocketSubscription.unsubscribe();
+            RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
+        }
+    }
+
+    private static boolean isSubscribed(Subscription subscription) {
+        return subscription != null && !subscription.isUnsubscribed();
     }
 }

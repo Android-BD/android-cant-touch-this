@@ -21,7 +21,9 @@ public class DeviceNameActivity extends Activity {
         setContentView(R.layout.device_name_activity);
 
         mSensorNameET = (EditText) findViewById(R.id.dna_sensor_name_et);
-        mSensorNameET.setText(Database.getCurrentObjectName());
+
+        if (!Database.getObjectName().isEmpty())
+            mSensorNameET.setText(Database.getObjectName());
     }
 
     @Override
@@ -43,7 +45,7 @@ public class DeviceNameActivity extends Activity {
                         }
                     }).show();
         } else {
-            Database.changeSensorObjectName(mSensorNameET.getText().toString());
+            Database.setObjectName(mSensorNameET.getText().toString());
 
             setResult(Activity.RESULT_OK);
             finish();

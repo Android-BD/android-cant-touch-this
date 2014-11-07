@@ -13,7 +13,7 @@ import com.relayr.cannottouchthis.storage.Database;
 
 public class AlarmActivity extends Activity {
 
-    private TextView mObjectNameTextView;
+    private TextView mObjectNameTV;
     private MediaPlayer mMediaPlayer;
 
     @Override
@@ -22,17 +22,20 @@ public class AlarmActivity extends Activity {
 
         setContentView(R.layout.alarm_activity);
 
-        mObjectNameTextView = (TextView) findViewById(R.id.txt_object_name);
+        mObjectNameTV = (TextView) findViewById(R.id.txt_object_name);
+
+        if (Database.isSoundAlarm()) {
+            mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.siren);
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mObjectNameTextView.setText(Database.getCurrentObjectName());
+        mObjectNameTV.setText(Database.getObjectName());
 
         if (Database.isSoundAlarm()) {
-            mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.siren);
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setVolume(Database.getVolume(), Database.getVolume());
             mMediaPlayer.start();
         }
