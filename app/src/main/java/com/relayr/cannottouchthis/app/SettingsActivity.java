@@ -56,7 +56,7 @@ public class SettingsActivity extends Activity {
         });
 
         SeekBar mThresholdSeek = (SeekBar) findViewById(R.id.sa_threshold_seek_bar);
-        mThresholdSeek.setProgress(Database.getThreshold());
+        mThresholdSeek.setProgress((int) Database.getThreshold() * 2);
         mThresholdSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -68,7 +68,7 @@ public class SettingsActivity extends Activity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Database.setThreshold(seekBar.getProgress());
+                Database.setThreshold(seekBar.getProgress() / 2);
             }
         });
     }

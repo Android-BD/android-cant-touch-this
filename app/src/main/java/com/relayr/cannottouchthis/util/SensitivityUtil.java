@@ -8,7 +8,7 @@ import io.relayr.model.Reading;
 public class SensitivityUtil {
 
     private static float mPrevValue = -1f;
-    private static int mThreshold;
+    private static float mThreshold;
 
     //Used for filtering mocked accelerometer values in debug mode
     private static int mDebugAlarmsCounter = 0;
@@ -20,7 +20,7 @@ public class SensitivityUtil {
     public static void thresholdChanged() {
         mThreshold = Database.getThreshold();
         if (mThreshold == Database.MAX_THRESHOLD) {
-            mThreshold = 1;
+            mThreshold = 0.5f;
         } else {
             mThreshold = Database.MAX_THRESHOLD - mThreshold;
         }

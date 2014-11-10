@@ -1,7 +1,11 @@
 package com.relayr.cannottouchthis.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,17 +53,13 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         setContentView(R.layout.cant_touch_this_activity);
 
         mSensorList = (ListView) findViewById(R.id.ctta_sensor_list);
-
-        if (RelayrSdk.isUserLoggedIn()) {
-            loadUserInfo();
-        } else {
-            RelayrSdk.logIn(this, this);
-        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        checkWiFi();
 
         setSensorListLayout(mSensorList);
         refreshSensorLayout(mAccelerometers.isEmpty());
@@ -99,6 +99,41 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         Toast.makeText(this, R.string.unsuccessfully_logged_in, Toast.LENGTH_SHORT).show();
     }
 
+    private void checkWiFi() {
+        if (isWifiConnected()) {
+            if (RelayrSdk.isUserLoggedIn()) {
+                loadUserInfo();
+            } else {
+                RelayrSdk.logIn(this, this);
+            }
+        } else {
+            showWiFiDialog();
+        }
+    }
+
+    private boolean isWifiConnected() {
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        return wifiManager.isWifiEnabled();
+    }
+
+    private void showWiFiDialog() {
+        new AlertDialog.Builder(this).setTitle(getString(R.string.please_connect_to_wifi))
+                .setPositiveButton(getString(R.string.connect), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        startActivity(new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK));
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                }).show();
+    }
+
     private void setSensorListLayout(ListView sensorList) {
         sensorList.setAdapter(new DeviceAdapter(this, mAccelerometers));
 
@@ -134,7 +169,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(CantTouchThisActivity.this, R.string.something_went_wrong,
+                        Toast.makeText(CantTouchThisActivity.this, R.string.err_loading_user_data,
                                 Toast.LENGTH_SHORT).show();
                     }
 
@@ -158,7 +193,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(CantTouchThisActivity.this, R.string.something_went_wrong,
+                        Toast.makeText(CantTouchThisActivity.this, R.string.err_loading_devices,
                                 Toast.LENGTH_SHORT).show();
                     }
 
@@ -196,7 +231,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(CantTouchThisActivity.this, R.string.something_went_wrong,
+                        Toast.makeText(CantTouchThisActivity.this, R.string.err_socket_problem,
                                 Toast.LENGTH_SHORT).show();
                     }
 

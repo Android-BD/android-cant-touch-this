@@ -18,7 +18,7 @@ public class Database {
     private static final String SETTINGS_ALARM_THRESHOLD = "sett_alarm_threshold";
     private static final String SETTINGS_SOUND_VOLUME = "sett_sound_volume";
 
-    public static final int MAX_THRESHOLD = 10;
+    public static final float MAX_THRESHOLD = 5f;
 
     private static SharedPreferences mDatabase = null;
 
@@ -78,16 +78,16 @@ public class Database {
         return mDatabase.getBoolean(SETTINGS_SOUND_ON, false);
     }
 
-    public static void setThreshold(int th) {
+    public static void setThreshold(float th) {
         SharedPreferences.Editor editor = mDatabase.edit();
-        editor.putInt(SETTINGS_ALARM_THRESHOLD, th);
+        editor.putFloat(SETTINGS_ALARM_THRESHOLD, th);
         editor.apply();
 
         SensitivityUtil.thresholdChanged();
     }
 
-    public static int getThreshold() {
-        return mDatabase.getInt(SETTINGS_ALARM_THRESHOLD, MAX_THRESHOLD - 2);
+    public static float getThreshold() {
+        return mDatabase.getFloat(SETTINGS_ALARM_THRESHOLD, MAX_THRESHOLD - 1);
     }
 
     public static void setSoundVolume(int volume) {

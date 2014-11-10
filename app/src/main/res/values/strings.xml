@@ -8,7 +8,9 @@
     <string name="ctta_empty_sensor_list">You don\'t have an accelerometer</string>
     <string name="successfully_logged_in">You were successfully logged in!</string>
     <string name="unsuccessfully_logged_in">There was a problem in the log in.</string>
-    <string name="something_went_wrong">Oops! Something went wrong</string>
+    <string name="err_loading_user_data">Oops! Loading user data failed</string>
+    <string name="err_loading_devices">Oops! Loading devices failed</string>
+    <string name="err_socket_problem">Oops! Web socket problem</string>
 
     <!--DeviceNameActivity-->
     <string name="dna_what_are_you_protecting">What is it you\'re protecting?</string>
@@ -36,5 +38,8 @@
     <string name="dismiss">Dismiss</string>
     <string name="done">Done</string>
     <string name="ok">OK</string>
+    <string name="please_connect_to_wifi">Please connect to WiFi</string>
+    <string name="connect">Connect</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
