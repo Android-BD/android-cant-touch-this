@@ -18,7 +18,7 @@
             android:label="@string/app_name"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTop">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,26 +29,26 @@
             android:name=".app.AlarmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".app.DeviceNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".app.SafeDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".app.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

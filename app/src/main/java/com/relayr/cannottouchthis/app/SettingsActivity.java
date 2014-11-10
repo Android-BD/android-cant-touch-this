@@ -10,6 +10,8 @@ import android.widget.Switch;
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
 
+import io.relayr.RelayrSdk;
+
 public class SettingsActivity extends Activity {
 
     private final int SENSOR_REASSIGN_RESULT = 12;
@@ -111,5 +113,14 @@ public class SettingsActivity extends Activity {
     public void onReAssignSensorClick(View view) {
         startActivityForResult(new Intent(SettingsActivity.this, DeviceNameActivity.class),
                 SENSOR_REASSIGN_RESULT);
+    }
+
+    /**
+     * Called from the xml
+     */
+    public void onLogOutClick(View view) {
+        RelayrSdk.logOut();
+        startActivity(new Intent(SettingsActivity.this, CantTouchThisActivity.class));
+        finish();
     }
 }

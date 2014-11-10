@@ -41,5 +41,6 @@
     <string name="please_connect_to_wifi">Please connect to WiFi</string>
     <string name="connect">Connect</string>
     <string name="cancel">Cancel</string>
+    <string name="sa_log_out">Logout</string>
 
 </resources>
