@@ -33,6 +33,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.Subscriptions;
 
 public class CantTouchThisActivity extends Activity implements LoginEventListener {
 
@@ -42,12 +43,12 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     private List<Device> mAccelerometers = new ArrayList<Device>();
     private int mSelectedSensor = -1;
 
-    private Subscription mUserInfoSubscription;
-    private Subscription mAccelDeviceSubscription;
-    private Subscription mWebSocketSubscription;
+    private Subscription mUserInfoSubscription = Subscriptions.empty();
+    private Subscription mDeviceSubscription = Subscriptions.empty();
+    private Subscription mWebSocketSubscription = Subscriptions.empty();
     private TransmitterDevice mDevice;
 
-    private AlertDialog mNetworkdialog;
+    private AlertDialog mNetworkDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +90,8 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     protected void onPause() {
         super.onPause();
 
-        if (mNetworkdialog != null) {
-            mNetworkdialog.dismiss();
+        if (mNetworkDialog != null) {
+            mNetworkDialog.dismiss();
         }
     }
 
@@ -123,7 +124,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void showNetworkDialog() {
-        mNetworkdialog = new AlertDialog.Builder(this).setTitle(getString(R.string.please_connect_to_wifi))
+        mNetworkDialog = new AlertDialog.Builder(this).setTitle(getString(R.string.please_connect_to_wifi))
                 .setPositiveButton(getString(R.string.connect), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -187,7 +188,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void loadAccelerometerDevices(String userId) {
-        mAccelDeviceSubscription = RelayrSdk.getRelayrApi()
+        mDeviceSubscription = RelayrSdk.getRelayrApi()
                 .getUserDevices(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -260,19 +261,17 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void unSubscribeToUpdates() {
-        if (isSubscribed(mUserInfoSubscription)) {
+        if (!mUserInfoSubscription.isUnsubscribed()) {
             mUserInfoSubscription.unsubscribe();
         }
-        if (isSubscribed(mAccelDeviceSubscription)) {
-            mAccelDeviceSubscription.unsubscribe();
+        if (!mDeviceSubscription.isUnsubscribed()) {
+            mDeviceSubscription.unsubscribe();
         }
-        if (isSubscribed(mWebSocketSubscription)) {
+        if (!mWebSocketSubscription.isUnsubscribed()) {
             mWebSocketSubscription.unsubscribe();
-            RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
+            if (mDevice != null) {
+                RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
+            }
         }
-    }
-
-    private static boolean isSubscribed(Subscription subscription) {
-        return subscription != null && !subscription.isUnsubscribed();
     }
 }
