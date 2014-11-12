@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/red_background">
@@ -11,65 +9,91 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_action_settings"
         android:background="@android:color/transparent"
-        android:padding="18dp"
-        android:layout_gravity="right"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:onClick="onSettingsClick" />
 
-    <io.relayr.commons.widget.CustomTextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/aa_alarm_exclamation"
-        android:textAllCaps="true"
-        style="@style/BoldText"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:textSize="65sp"
-        android:paddingTop="40dp"
-        android:layout_gravity="center" />
+        android:layout_centerInParent="true">
 
-    <io.relayr.commons.widget.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="true"
-        android:text="@string/aa_someone"
-        style="@style/BoldText"
-        android:textColor="@android:color/white"
-        android:textSize="50sp"
-        android:layout_gravity="center" />
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aa_alarm_exclamation"
+            android:textAllCaps="true"
+            style="@style/BoldText"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/aa_alarm"
+            android:layout_gravity="center"
+            android:padding="5dp" />
 
-    <io.relayr.commons.widget.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/aa_touched_your"
-        android:textAllCaps="true"
-        style="@style/BoldText"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:layout_gravity="center" />
+        <io.relayr.commons.widget.CustomTextView
+            android:id="@+id/aa_date_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            style="@style/BoldText"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/aa_date_time_text_size"
+            android:layout_gravity="center"
+            android:padding="5dp" />
 
-    <io.relayr.commons.widget.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txt_object_name"
-        style="@style/BoldText"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:textSize="80sp"
-        android:layout_gravity="center" />
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:text="@string/aa_someone"
+            style="@style/BoldText"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/aa_someone_text_size"
+            android:layout_gravity="center"
+            android:padding="5dp" />
 
-    <io.relayr.commons.widget.CustomButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:background="@drawable/button_white"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:text="@string/dismiss"
-        style="@style/BoldText"
-        android:onClick="onDismissClicked"
-        android:enabled="true"
-        android:clickable="true" />
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aa_touched_your"
+            android:textAllCaps="true"
+            style="@style/BoldText"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/aa_touched_your_text_size"
+            android:layout_gravity="center"
+            android:padding="5dp" />
 
-</LinearLayout>
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/aa_object_name_tv"
+            style="@style/BoldText"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/aa_object_name_text_size"
+            android:layout_gravity="center"
+            android:padding="5dp" />
+
+        <io.relayr.commons.widget.CustomButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/button_text_size"
+            android:layout_marginTop="@dimen/button_text_size"
+            android:padding="@dimen/button_text_padding"
+            android:background="@drawable/button_white"
+            android:textColor="@android:color/white"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/dismiss"
+            style="@style/BoldText"
+            android:onClick="onDismissClicked"
+            android:enabled="true"
+            android:clickable="true"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+</RelativeLayout>

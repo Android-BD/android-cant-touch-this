@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class AlarmActivity extends Activity {
 
-    private TextView mObjectNameTV;
+    private TextView mObjectNameTv;
+    private TextView mDateTimeTv;
     private MediaPlayer mMediaPlayer;
 
     @Override
@@ -22,10 +27,11 @@ public class AlarmActivity extends Activity {
 
         setContentView(R.layout.alarm_activity);
 
-        mObjectNameTV = (TextView) findViewById(R.id.txt_object_name);
+        mObjectNameTv = (TextView) findViewById(R.id.aa_object_name_tv);
+        mDateTimeTv = (TextView) findViewById(R.id.aa_date_time_tv);
 
         if (Database.isSoundAlarm()) {
-            mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.siren);
+            mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.hammer_alarm);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         }
     }
@@ -33,7 +39,10 @@ public class AlarmActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        mObjectNameTV.setText(Database.getObjectName());
+
+        mObjectNameTv.setText(Database.getObjectName());
+
+        mDateTimeTv.setText(String.format("ON %1$tD AT %1$tI:%1$tM", Calendar.getInstance()));
 
         if (Database.isSoundAlarm()) {
             mMediaPlayer.setVolume(Database.getVolume(), Database.getVolume());

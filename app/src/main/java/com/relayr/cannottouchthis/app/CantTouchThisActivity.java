@@ -5,8 +5,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -46,6 +50,8 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     private Subscription mWebSocketSubscription;
     private TransmitterDevice mDevice;
 
+    private AlertDialog mNetworkdialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,19 +68,18 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         checkWiFi();
 
         setSensorListLayout(mSensorList);
-        refreshSensorLayout(mAccelerometers.isEmpty());
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         unSubscribeToUpdates();
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 
     @Override
@@ -85,6 +90,15 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
             Database.setSensorData(mAccelerometers.get(mSelectedSensor));
 
             startActivity(new Intent(this, SafeDeviceActivity.class));
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (mNetworkdialog != null) {
+            mNetworkdialog.dismiss();
         }
     }
 
@@ -100,24 +114,24 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void checkWiFi() {
-        if (isWifiConnected()) {
+        if (isConnected()) {
             if (RelayrSdk.isUserLoggedIn()) {
                 loadUserInfo();
             } else {
                 RelayrSdk.logIn(this, this);
             }
         } else {
-            showWiFiDialog();
+            showNetworkDialog();
         }
     }
 
-    private boolean isWifiConnected() {
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        return wifiManager.isWifiEnabled();
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
-    private void showWiFiDialog() {
-        new AlertDialog.Builder(this).setTitle(getString(R.string.please_connect_to_wifi))
+    private void showNetworkDialog() {
+        mNetworkdialog = new AlertDialog.Builder(this).setTitle(getString(R.string.please_connect_to_wifi))
                 .setPositiveButton(getString(R.string.connect), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

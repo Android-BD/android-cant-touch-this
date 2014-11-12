@@ -1,57 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@color/background">
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_action_settings"
         android:background="@android:color/transparent"
-        android:padding="18dp"
-        android:layout_gravity="right"
+        android:padding="20dp"
+        android:layout_alignParentRight="true"
         android:onClick="onSettingsClick" />
 
-    <io.relayr.commons.widget.CustomTextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="YOUR"
-        style="@style/BoldText"
-        android:textColor="@color/gray_text"
-        android:textSize="70sp"
-        android:paddingTop="90dp"
-        android:layout_gravity="center" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <io.relayr.commons.widget.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ss_object_name_tv"
-        style="@style/BoldText"
-        android:textColor="@android:color/white"
-        android:textSize="35sp"
-        android:layout_gravity="center" />
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sda_your"
+            style="@style/BoldText"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/sd_static_text"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:background="@color/background_dark"
+            android:textAllCaps="true" />
 
-    <io.relayr.commons.widget.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="IS"
-        style="@style/BoldText"
-        android:textColor="@color/gray_lighter_text"
-        android:textSize="70sp"
-        android:layout_gravity="center" />
-
-    <io.relayr.commons.widget.CustomTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SAFE"
-        style="@style/BoldText"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:textSize="70sp"
-        android:layout_gravity="center" />
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ss_object_name_tv"
+            style="@style/BoldText"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sd_object_text_size"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:background="@color/background_dark"
+            android:textAllCaps="true" />
 
 
-</LinearLayout>
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sda_is"
+            style="@style/BoldText"
+            android:textColor="@color/gray_lighter_text"
+            android:textSize="@dimen/sd_static_text"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:background="@color/background_dark"
+            android:textAllCaps="true" />
+
+
+        <io.relayr.commons.widget.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sda_safe"
+            style="@style/BoldText"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/sd_static_text"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:background="@color/background_dark"
+            android:textAllCaps="true" />
+    </LinearLayout>
+</RelativeLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
@@ -17,6 +18,7 @@ public class SettingsActivity extends Activity {
     private final int SENSOR_REASSIGN_RESULT = 12;
 
     private SeekBar mVolumeSeek;
+    private TextView mSensitivityValueTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.settings_activity);
 
         mVolumeSeek = (SeekBar) findViewById(R.id.sa_volume_seek_bar);
+        mSensitivityValueTv = (TextView) findViewById(R.id.sa_alarm_sensitivity_value);
     }
 
     @Override
@@ -57,11 +60,16 @@ public class SettingsActivity extends Activity {
             }
         });
 
+        int sensitivity = (int) (Database.getSensitivity() * 2f);
+
+        mSensitivityValueTv.setText(sensitivity + "");
+
         SeekBar mThresholdSeek = (SeekBar) findViewById(R.id.sa_threshold_seek_bar);
-        mThresholdSeek.setProgress((int) Database.getThreshold() * 2);
+        mThresholdSeek.setProgress(sensitivity);
         mThresholdSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                mSensitivityValueTv.setText(seekBar.getProgress() + "");
             }
 
             @Override
@@ -70,7 +78,7 @@ public class SettingsActivity extends Activity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Database.setThreshold(seekBar.getProgress() / 2);
+                Database.setSensitivity(seekBar.getProgress() / 2f);
             }
         });
     }

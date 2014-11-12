@@ -2,5 +2,39 @@
     <!-- Example customization of dimensions originally defined in res/values/dimens.xml
          (such as screen margins) for screens with more than 820dp of available width. This
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
-    <dimen name="activity_horizontal_margin">64dp</dimen>
+
+    <dimen name="button_text_size">35sp</dimen>
+    <dimen name="button_text_padding">40dp</dimen>
+    <dimen name="button_border_corner_radius">60dp</dimen>
+
+    <dimen name="activity_title_padding">50dp</dimen>
+    <dimen name="activity_title_text_size">45sp</dimen>
+
+    <dimen name="list_device_padding">60dp</dimen>
+    <dimen name="list_device_text_size">50sp</dimen>
+
+    <dimen name="device_name_et_margin">50dp</dimen>
+    <dimen name="device_name_et_text_size">35sp</dimen>
+    <dimen name="device_name_protecting_text_size">35sp</dimen>
+    <dimen name="device_name_protecting_text_padding">40dp</dimen>
+
+    <dimen name="ia_circle_size">450dp</dimen>
+    <dimen name="ia_cant">90sp</dimen>
+    <dimen name="ia_touch">80sp</dimen>
+    <dimen name="ia_this">90sp</dimen>
+    <dimen name="ia_relayr">120sp</dimen>
+    <dimen name="ia_demo_app">60sp</dimen>
+
+    <dimen name="sd_static_text">120sp</dimen>
+    <dimen name="sd_object_text_size">80sp</dimen>
+
+    <dimen name="aa_alarm">120sp</dimen>
+    <dimen name="aa_date_time_text_size">40sp</dimen>
+    <dimen name="aa_someone_text_size">100sp</dimen>
+    <dimen name="aa_touched_your_text_size">70sp</dimen>
+    <dimen name="aa_object_name_text_size">80sp</dimen>
+
+    <dimen name="sa_switch_text_size">40sp</dimen>
+    <dimen name="sa_element_padding">30dp</dimen>
+    <dimen name="sa_seek_bar_padding">100dp</dimen>
 </resources>

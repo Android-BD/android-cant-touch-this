@@ -1,118 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent"
+    android:background="@color/background">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <io.relayr.commons.widget.CustomTextView
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_action_back"
+        android:background="@color/background_dark"
+        android:text="@string/sa_title_settings"
+        style="@style/BoldText"
+        android:textColor="@android:color/white"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/activity_title_padding"
+        android:padding="@dimen/activity_title_padding"
+        android:textSize="@dimen/activity_title_text_size"
+        android:onClick="onBackClick"
+        android:clickable="true"
+        android:enabled="true" />
+
+    <ScrollView
         android:layout_height="match_parent"
-        android:background="@color/gray_background">
+        android:layout_width="match_parent"
+        android:background="@color/background">
 
-        <io.relayr.commons.widget.CustomTextView
-            android:layout_width="match_parent"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_action_back"
-            android:background="@android:color/black"
-            android:text="@string/sa_title_settings"
-            style="@style/BoldText"
-            android:textSize="24sp"
-            android:textColor="@android:color/white"
-            android:gravity="center_vertical"
-            android:drawablePadding="18dp"
-            android:padding="18dp"
-            android:onClick="onBackClick"
-            android:clickable="true"
-            android:enabled="true" />
-
-        <Switch
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sa_switch_alarm"
-            style="@style/BoldText"
-            android:textColor="@android:color/white"
-            android:id="@+id/sa_alarm_switch"
-            android:textSize="22sp"
-            android:checked="true"
-            android:onClick="onAlarmSwitchClick"
-            android:layout_marginTop="30dp"
-            android:padding="18dp" />
+            android:orientation="vertical">
 
-        <Switch
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sa_switch_sound"
-            style="@style/BoldText"
-            android:textColor="@android:color/white"
-            android:id="@+id/sa_sound_switch"
-            android:textSize="22sp"
-            android:checked="true"
-            android:onClick="onSoundSwitchClick"
-            android:layout_marginTop="20dp"
-            android:padding="18dp" />
+            <Switch
+                android:id="@+id/sa_alarm_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sa_switch_alarm"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="@dimen/sa_switch_text_size"
+                android:checked="true"
+                android:onClick="onAlarmSwitchClick"
+                android:layout_marginTop="@dimen/sa_element_padding"
+                android:layout_marginBottom="@dimen/sa_element_padding"
+                android:padding="@dimen/sa_element_padding" />
 
-        <SeekBar
-            android:id="@+id/sa_volume_seek_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            android:layout_gravity="center_horizontal"
-            android:max="10" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background_dark" />
 
-        <io.relayr.commons.widget.CustomTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            style="@style/BoldText"
-            android:layout_marginTop="40dp"
-            android:text="@string/sa_alarm_threshold"
-            android:textColor="@android:color/white"
-            android:padding="18dp" />
+            <Switch
+                android:id="@+id/sa_sound_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sa_switch_sound"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sa_switch_text_size"
+                android:checked="false"
+                android:onClick="onSoundSwitchClick"
+                android:layout_marginTop="@dimen/sa_element_padding"
+                android:padding="@dimen/sa_element_padding" />
 
-        <SeekBar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sa_threshold_seek_bar"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="18dp"
-            android:max="10" />
+            <SeekBar
+                android:id="@+id/sa_volume_seek_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/sa_seek_bar_padding"
+                android:paddingRight="@dimen/sa_seek_bar_padding"
+                android:layout_marginBottom="@dimen/sa_element_padding"
+                android:layout_gravity="center_horizontal"
+                android:max="10" />
 
-        <io.relayr.commons.widget.CustomButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="40dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/button_white"
-            android:gravity="center"
-            android:text="@string/sa_reassign_sensor"
-            android:textAllCaps="true"
-            android:layout_gravity="center_vertical"
-            android:enabled="true"
-            android:clickable="true"
-            style="@style/BoldText"
-            android:onClick="onReAssignSensorClick" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background_dark" />
 
-        <io.relayr.commons.widget.CustomButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@drawable/button_white"
-            android:gravity="center"
-            android:text="@string/sa_log_out"
-            android:textAllCaps="true"
-            android:layout_gravity="center_vertical"
-            android:enabled="true"
-            android:clickable="true"
-            style="@style/BoldText"
-            android:onClick="onLogOutClick" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/sa_element_padding"
+                android:layout_marginTop="@dimen/sa_element_padding">
 
-    </LinearLayout>
-</ScrollView>
+                <io.relayr.commons.widget.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sa_switch_text_size"
+                    android:text="@string/sa_alarm_sensitivity"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentLeft="true" />
+
+                <io.relayr.commons.widget.CustomTextView
+                    android:id="@+id/sa_alarm_sensitivity_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sa_switch_text_size"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentRight="true"
+                    style="@style/BoldText" />
+            </RelativeLayout>
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sa_threshold_seek_bar"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/sa_element_padding"
+                android:paddingLeft="@dimen/sa_seek_bar_padding"
+                android:paddingRight="@dimen/sa_seek_bar_padding"
+                android:max="10" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background_dark" />
+
+            <io.relayr.commons.widget.CustomButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="@dimen/button_text_padding"
+                android:padding="@dimen/button_text_padding"
+                android:textSize="@dimen/button_text_size"
+                android:background="@drawable/button_white"
+                android:text="@string/sa_reassign_sensor"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:enabled="true"
+                android:clickable="true"
+                style="@style/BoldText"
+                android:onClick="onReAssignSensorClick" />
+
+            <io.relayr.commons.widget.CustomButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_marginTop="@dimen/button_text_padding"
+                android:layout_marginBottom="@dimen/button_text_padding"
+                android:padding="@dimen/button_text_padding"
+                android:textSize="@dimen/button_text_size"
+                android:background="@drawable/button_white"
+                android:text="@string/sa_log_out"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:enabled="true"
+                android:clickable="true"
+                style="@style/BoldText"
+                android:onClick="onLogOutClick" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

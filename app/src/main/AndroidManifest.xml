@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,11 +15,10 @@
         android:name=".CantTouchThisApplication">
 
         <activity
-            android:name=".app.CantTouchThisActivity"
+            android:name=".app.IntroActivity"
             android:label="@string/app_name"
-            android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTask">
+            android:screenOrientation="portrait"
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,29 +26,33 @@
         </activity>
 
         <activity
+            android:name=".app.CantTouchThisActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar" />
+
+        <activity
             android:name=".app.AlarmActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:launchMode="singleTask" />
+            android:launchMode="singleInstance"/>
 
         <activity
             android:name=".app.DeviceNameActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:windowSoftInputMode="adjustPan"
-            android:launchMode="singleTask" />
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop"/>
 
         <activity
             android:name=".app.SafeDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:launchMode="singleTask" />
+            android:theme="@style/android:Theme.Holo.Light.NoActionBar" />
 
         <activity
             android:name=".app.SettingsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/android:Theme.Holo.Light.NoActionBar"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

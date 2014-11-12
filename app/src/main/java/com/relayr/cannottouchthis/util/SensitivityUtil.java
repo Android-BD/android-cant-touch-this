@@ -18,11 +18,11 @@ public class SensitivityUtil {
     }
 
     public static void thresholdChanged() {
-        mThreshold = Database.getThreshold();
-        if (mThreshold == Database.MAX_THRESHOLD) {
-            mThreshold = 0.5f;
+        mThreshold = Database.getSensitivity();
+        if (mThreshold == Database.MAX_SENSITIVITY) {
+            mThreshold = 0.2f;
         } else {
-            mThreshold = Database.MAX_THRESHOLD - mThreshold;
+            mThreshold = Database.MAX_SENSITIVITY - mThreshold;
         }
     }
 
