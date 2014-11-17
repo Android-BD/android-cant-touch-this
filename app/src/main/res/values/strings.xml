@@ -11,7 +11,7 @@
     <string name="ia_demo_app">DEMO APP</string>
 
     <!--CantTouchThisActivity-->
-    <string name="ctta_title_select_accel">select accelerator</string>
+    <string name="ctta_title_select_accel">select accelerometer</string>
     <string name="ctta_empty_sensor_list">You don\'t have an accelerometer</string>
     <string name="successfully_logged_in">You were successfully logged in!</string>
     <string name="unsuccessfully_logged_in">There was a problem in the log in.</string>
