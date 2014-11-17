@@ -1,17 +1,11 @@
 package com.relayr.cannottouchthis.app;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
 
 import com.relayr.cannottouchthis.R;
-import com.relayr.cannottouchthis.storage.Database;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

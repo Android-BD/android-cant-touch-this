@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.text.SpannableString;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +12,6 @@ import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class AlarmActivity extends Activity {
 
