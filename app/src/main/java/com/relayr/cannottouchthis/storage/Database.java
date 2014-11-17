@@ -15,10 +15,10 @@ public class Database {
 
     private static final String SETTINGS_ALARM_ON = "sett_alarm_on";
     private static final String SETTINGS_SOUND_ON = "sett_alarm_sound_on";
-    private static final String SETTINGS_ALARM_SENSITIVITY = "sett_alarm_threshold";
+    private static final String SETTINGS_ALARM_THRESHOLD = "sett_alarm_threshold";
     private static final String SETTINGS_SOUND_VOLUME = "sett_sound_volume";
 
-    public static final float MAX_SENSITIVITY = 5f;
+    public static final float MAX_THRESHOLD = 5f;
 
     private static SharedPreferences mDatabase = null;
 
@@ -78,16 +78,16 @@ public class Database {
         return mDatabase.getBoolean(SETTINGS_SOUND_ON, false);
     }
 
-    public static void setSensitivity(float th) {
+    public static void setThreshold(float th) {
         SharedPreferences.Editor editor = mDatabase.edit();
-        editor.putFloat(SETTINGS_ALARM_SENSITIVITY, th);
+        editor.putFloat(SETTINGS_ALARM_THRESHOLD, th);
         editor.apply();
 
         SensitivityUtil.thresholdChanged();
     }
 
-    public static float getSensitivity() {
-        return mDatabase.getFloat(SETTINGS_ALARM_SENSITIVITY, MAX_SENSITIVITY - 1);
+    public static float getThreshold() {
+        return mDatabase.getFloat(SETTINGS_ALARM_THRESHOLD, MAX_THRESHOLD - 1);
     }
 
     public static void setSoundVolume(int volume) {

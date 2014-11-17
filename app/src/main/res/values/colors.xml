@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="background">#2B434A</color>
-    <color name="background_dark">#22353B</color>
-
     <color name="gray_background">#333</color>
+    <color name="gray_raw_background">#313534</color>
 
     <color name="black_transparent_hard">#AA000000</color>
 
-    <color name="gray">#333333</color>
+    <color name="gray_transparent_hard">#AA333333</color>
 
     <color name="gray_text">#888888</color>
     <color name="gray_lighter_text">#CCCCCC</color>

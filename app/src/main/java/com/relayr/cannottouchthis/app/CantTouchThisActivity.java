@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
@@ -33,7 +32,6 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-import rx.subscriptions.Subscriptions;
 
 public class CantTouchThisActivity extends Activity implements LoginEventListener {
 
@@ -43,12 +41,10 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     private List<Device> mAccelerometers = new ArrayList<Device>();
     private int mSelectedSensor = -1;
 
-    private Subscription mUserInfoSubscription = Subscriptions.empty();
-    private Subscription mDeviceSubscription = Subscriptions.empty();
-    private Subscription mWebSocketSubscription = Subscriptions.empty();
+    private Subscription mUserInfoSubscription;
+    private Subscription mAccelDeviceSubscription;
+    private Subscription mWebSocketSubscription;
     private TransmitterDevice mDevice;
-
-    private AlertDialog mNetworkDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +62,18 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         checkWiFi();
 
         setSensorListLayout(mSensorList);
+        refreshSensorLayout(mAccelerometers.isEmpty());
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         unSubscribeToUpdates();
     }
 
@@ -87,15 +89,6 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        if (mNetworkDialog != null) {
-            mNetworkDialog.dismiss();
-        }
-    }
-
-    @Override
     public void onSuccessUserLogIn() {
         Toast.makeText(this, R.string.successfully_logged_in, Toast.LENGTH_SHORT).show();
         loadUserInfo();
@@ -107,24 +100,24 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void checkWiFi() {
-        if (isConnected()) {
+        if (isWifiConnected()) {
             if (RelayrSdk.isUserLoggedIn()) {
                 loadUserInfo();
             } else {
                 RelayrSdk.logIn(this, this);
             }
         } else {
-            showNetworkDialog();
+            showWiFiDialog();
         }
     }
 
-    private boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+    private boolean isWifiConnected() {
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        return wifiManager.isWifiEnabled();
     }
 
-    private void showNetworkDialog() {
-        mNetworkDialog = new AlertDialog.Builder(this).setTitle(getString(R.string.please_connect_to_wifi))
+    private void showWiFiDialog() {
+        new AlertDialog.Builder(this).setTitle(getString(R.string.please_connect_to_wifi))
                 .setPositiveButton(getString(R.string.connect), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -188,7 +181,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void loadAccelerometerDevices(String userId) {
-        mDeviceSubscription = RelayrSdk.getRelayrApi()
+        mAccelDeviceSubscription = RelayrSdk.getRelayrApi()
                 .getUserDevices(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -261,17 +254,19 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void unSubscribeToUpdates() {
-        if (!mUserInfoSubscription.isUnsubscribed()) {
+        if (isSubscribed(mUserInfoSubscription)) {
             mUserInfoSubscription.unsubscribe();
         }
-        if (!mDeviceSubscription.isUnsubscribed()) {
-            mDeviceSubscription.unsubscribe();
+        if (isSubscribed(mAccelDeviceSubscription)) {
+            mAccelDeviceSubscription.unsubscribe();
         }
-        if (!mWebSocketSubscription.isUnsubscribed()) {
+        if (isSubscribed(mWebSocketSubscription)) {
             mWebSocketSubscription.unsubscribe();
-            if (mDevice != null) {
-                RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
-            }
+            RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
         }
+    }
+
+    private static boolean isSubscribed(Subscription subscription) {
+        return subscription != null && !subscription.isUnsubscribed();
     }
 }

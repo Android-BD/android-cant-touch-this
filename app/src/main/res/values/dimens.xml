@@ -1,39 +1,5 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-
-    <dimen name="button_text_size">18sp</dimen>
-    <dimen name="button_text_padding">18dp</dimen>
-    <dimen name="button_border_corner_radius">30dp</dimen>
-
-    <dimen name="activity_title_padding">20dp</dimen>
-    <dimen name="activity_title_text_size">24sp</dimen>
-
-    <dimen name="list_device_padding">30dp</dimen>
-    <dimen name="list_device_text_size">20sp</dimen>
-
-    <dimen name="device_name_et_margin">20dp</dimen>
-    <dimen name="device_name_et_text_size">22sp</dimen>
-    <dimen name="device_name_protecting_text_size">22sp</dimen>
-    <dimen name="device_name_protecting_text_padding">22dp</dimen>
-
-    <dimen name="ia_circle_size">200dp</dimen>
-    <dimen name="ia_cant">40sp</dimen>
-    <dimen name="ia_touch">30sp</dimen>
-    <dimen name="ia_this">45sp</dimen>
-    <dimen name="ia_relayr">50sp</dimen>
-    <dimen name="ia_demo_app">20sp</dimen>
-
-    <dimen name="sd_static_text">60sp</dimen>
-    <dimen name="sd_object_text_size">40sp</dimen>
-
-    <dimen name="aa_alarm">60sp</dimen>
-    <dimen name="aa_date_time_text_size">20sp</dimen>
-    <dimen name="aa_someone_text_size">50sp</dimen>
-    <dimen name="aa_touched_your_text_size">25sp</dimen>
-    <dimen name="aa_object_name_text_size">40sp</dimen>
-
-    <dimen name="sa_switch_text_size">22sp</dimen>
-    <dimen name="sa_element_padding">14dp</dimen>
-    <dimen name="sa_seek_bar_padding">50dp</dimen>
-
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 </resources>

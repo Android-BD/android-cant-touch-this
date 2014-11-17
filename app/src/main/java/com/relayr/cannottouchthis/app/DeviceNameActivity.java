@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
@@ -24,15 +21,7 @@ public class DeviceNameActivity extends Activity {
         setContentView(R.layout.device_name_activity);
 
         mSensorNameET = (EditText) findViewById(R.id.dna_sensor_name_et);
-        mSensorNameET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setObjectName();
-                }
-                return false;
-            }
-        });
+
         if (!Database.getObjectName().isEmpty())
             mSensorNameET.setText(Database.getObjectName());
     }
@@ -56,14 +45,10 @@ public class DeviceNameActivity extends Activity {
                         }
                     }).show();
         } else {
-            setObjectName();
+            Database.setObjectName(mSensorNameET.getText().toString());
+
+            setResult(Activity.RESULT_OK);
+            finish();
         }
-    }
-
-    private void setObjectName() {
-        Database.setObjectName(mSensorNameET.getText().toString());
-
-        setResult(Activity.RESULT_OK);
-        finish();
     }
 }
