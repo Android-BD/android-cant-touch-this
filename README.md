@@ -1,21 +1,38 @@
-# Can touch this app demo
+# The Can'tTouchThis Demo Application
 
-#### This demo displays usage of WunderBar's Accelerometer/Gyroscope module.
-Start by signing in with your relayr credentials or use your Twitter or GitHub credentials to sign in.
+Can’tTouchThis is a quick and fun application which uses the Wunderbar Accelerometer/Gyroscope sensor and the relayr Cloud Platform to alert when your wallet/keys/cello/elephant has been touched, stolen or moved. It will also give you an idea as to how to implement the [relayr Android SDK](https://github.com/relayr/android-sdk) in order to create your very own application. 
 
-##### In debug mode there will be one sensor to select
+Simply place your sensor on the item you wish to monitor and show people that they Can’t Touch This!
+
+To download the app and try it out simply click [here](https://play.google.com/store/apps/details?id=com.relayr.cannottouchthis)
+
+
+#### 1. Sign in
+Start by signing in with your relayr credentials or use your Twitter/ GitHub credentials to sign in.
+
+#### 2. Select your sensor
+**Note**: in the debug mode of the application there will only be one available sensor for selection.
+
 ![](/art/s1.jpg)
 
-##### You can name object that you want to protect
+#### 3. Give your object a name
+Name the object you would like to protect and click *Done*.
+
 ![](/art/s2.jpg)
 
-##### After clicking **Done** the object will be secured.
+#### 4. Your object in now safe! 
+
 ![](/art/s3.jpg)
 
-##### Set settings as you like them.
-In debug mode alarm will be triggered cca. every 25 seconds.
-In release mode use **Sensitivity** slider and just move your Accel module.
+#### 5. Modify the settings
+Use the sliders to adjust the sensitivity of the alert mechanism as well as the volume of the sound triggered.
+ 
+**Note**: In debug mode the alarm will be triggered every ~25 seconds.
+
 ![](/art/s4.jpg)
 
-##### When alarm is triggered you'll see this screen
+#### 6. Get alerted
+When the alarm is triggered you will be prompted with the following screen
+The screen will pop up even when the application is in the background.
+
 ![](/art/s5.jpg)
