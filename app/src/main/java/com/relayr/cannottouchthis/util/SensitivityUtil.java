@@ -45,7 +45,7 @@ public class SensitivityUtil {
         if (RelayrSdkInitializer.isDebug() && isAlarm) {
             mDebugAlarmsCounter++;
 
-            if (mDebugAlarmsCounter == 50) {
+            if (mDebugAlarmsCounter == 100) {
                 mDebugAlarmsCounter = 0;
                 return true;
             }
