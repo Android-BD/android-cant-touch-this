@@ -1,48 +1,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".CantTouchThisActivity"
-    android:background="@color/background_dark"
-    android:animateLayoutChanges="true">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".CantTouchThisActivity"
+                android:background="@color/background_dark"
+                android:animateLayoutChanges="true">
 
     <io.relayr.commons.widget.CustomTextView
         android:id="@+id/ctta_title"
-        android:layout_alignParentTop="true"
-        android:text="@string/ctta_title_select_accel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/ctta_title_select_accel"
+        android:layout_alignParentTop="true"
         android:gravity="center"
         android:padding="@dimen/activity_title_padding"
         android:textSize="@dimen/activity_title_text_size"
         android:textColor="@android:color/white"
         android:background="@color/background_dark"
-        style="@style/BoldText" />
+        style="@style/BoldText"/>
 
     <ListView
         android:id="@+id/ctta_sensor_list"
-        android:layout_below="@id/ctta_title"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/ctta_title"
+        android:orientation="vertical"
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical"
         android:clickable="true"
         android:scrollingCache="false"
         android:smoothScrollbar="true"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <io.relayr.commons.widget.CustomTextView
         android:id="@+id/ctta_empty_sensor_label"
-        android:text="@string/ctta_empty_sensor_list"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/ctta_empty_sensor_list"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:padding="20dp"
         android:textSize="20sp"
         android:textColor="@android:color/white"
-        style="@style/BoldText"
-        android:visibility="gone" />
+        android:visibility="gone"
+        style="@style/BoldText"/>
 
 </RelativeLayout>

@@ -15,7 +15,7 @@ import com.relayr.cannottouchthis.storage.Database;
 
 public class DeviceNameActivity extends Activity {
 
-    private EditText mSensorNameET;
+    private EditText mSensorName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +23,17 @@ public class DeviceNameActivity extends Activity {
 
         setContentView(R.layout.device_name_activity);
 
-        mSensorNameET = (EditText) findViewById(R.id.dna_sensor_name_et);
-        mSensorNameET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mSensorName = (EditText) findViewById(R.id.dna_sensor_name_et);
+        mSensorName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    setObjectName();
-                }
+                if (actionId == EditorInfo.IME_ACTION_DONE) saveObjectName();
+
                 return false;
             }
         });
-        if (!Database.getObjectName().isEmpty())
-            mSensorNameET.setText(Database.getObjectName());
+
+        if (!Database.getObjectName().isEmpty()) mSensorName.setText(Database.getObjectName());
     }
 
     @Override
@@ -45,7 +44,7 @@ public class DeviceNameActivity extends Activity {
     }
 
     public void onDoneClicked(View v) {
-        if (mSensorNameET.getText().toString().isEmpty()) {
+        if (mSensorName.getText().toString().isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dna_dialog_title))
                     .setMessage(getString(R.string.dna_dialog_message))
@@ -56,12 +55,12 @@ public class DeviceNameActivity extends Activity {
                         }
                     }).show();
         } else {
-            setObjectName();
+            saveObjectName();
         }
     }
 
-    private void setObjectName() {
-        Database.setObjectName(mSensorNameET.getText().toString());
+    private void saveObjectName() {
+        Database.setObjectName(mSensorName.getText().toString());
 
         setResult(Activity.RESULT_OK);
         finish();

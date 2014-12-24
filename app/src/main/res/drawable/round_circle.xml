@@ -3,11 +3,9 @@
     android:shape="oval"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/red_background" />
+    <solid android:color="@color/red_background"/>
 
     <size
         android:height="@dimen/ia_circle_size"
-        android:width="@dimen/ia_circle_size"
-        />
-
+        android:width="@dimen/ia_circle_size"/>
 </shape>

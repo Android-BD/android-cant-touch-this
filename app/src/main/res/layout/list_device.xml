@@ -1,8 +1,6 @@
 <io.relayr.commons.widget.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ctt_device_tv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/BoldText"
     android:textColor="@color/gray_even_lighter_text"
     android:textSize="@dimen/list_device_text_size"
     android:paddingTop="@dimen/list_device_padding"
@@ -14,4 +12,5 @@
     android:focusableInTouchMode="false"
     android:background="@color/background"
     android:drawableRight="@drawable/ic_action_next_item"
-    android:drawablePadding="@dimen/list_device_padding" />
+    android:drawablePadding="@dimen/list_device_padding"
+    style="@style/BoldText"/>

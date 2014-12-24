@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,31 +23,31 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ia_can_not"
                 android:textAllCaps="true"
-                style="@style/BoldText"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ia_cant"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                style="@style/BoldText"/>
 
             <io.relayr.commons.widget.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
                 android:text="@string/ia_touch"
-                style="@style/BoldText"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ia_touch"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                style="@style/BoldText"/>
 
             <io.relayr.commons.widget.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ia_this"
                 android:textAllCaps="true"
-                style="@style/BoldText"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/ia_this"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                style="@style/BoldText"/>
 
         </LinearLayout>
 
@@ -56,22 +55,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            style="@style/BoldText"
             android:textColor="@android:color/white"
             android:text="@string/ia_relayr"
             android:textStyle="bold"
             android:textSize="@dimen/ia_relayr"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            style="@style/BoldText"/>
 
         <io.relayr.commons.widget.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/BoldText"
             android:textColor="@android:color/white"
             android:text="@string/ia_demo_app"
             android:textStyle="bold"
             android:textSize="@dimen/ia_demo_app"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            style="@style/BoldText"/>
 
     </LinearLayout>
 </RelativeLayout>

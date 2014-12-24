@@ -40,7 +40,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     private final int SENSOR_NAME_RESULT = 11;
 
     private ListView mSensorList;
-    private List<Device> mAccelerometers = new ArrayList<Device>();
+    private List<Device> mAccelerometers = new ArrayList<>();
     private int mSelectedSensor = -1;
 
     private Subscription mUserInfoSubscription = Subscriptions.empty();
@@ -49,6 +49,8 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     private TransmitterDevice mDevice;
 
     private AlertDialog mNetworkDialog;
+
+    private boolean logInStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         super.onActivityResult(requestCode, resultCode, data);
 
         if (SENSOR_NAME_RESULT == requestCode && RESULT_OK == resultCode) {
-            Database.setSensorData(mAccelerometers.get(mSelectedSensor));
+            Database.setObjectId(mAccelerometers.get(mSelectedSensor).id);
 
             startActivity(new Intent(this, SafeDeviceActivity.class));
         }
@@ -90,31 +92,36 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     protected void onPause() {
         super.onPause();
 
-        if (mNetworkDialog != null) {
-            mNetworkDialog.dismiss();
-        }
+        if (mNetworkDialog != null) mNetworkDialog.dismiss();
     }
 
     @Override
     public void onSuccessUserLogIn() {
+        logInStarted = false;
         Toast.makeText(this, R.string.successfully_logged_in, Toast.LENGTH_SHORT).show();
-        loadUserInfo();
     }
 
     @Override
     public void onErrorLogin(Throwable e) {
+        logInStarted = false;
         Toast.makeText(this, R.string.unsuccessfully_logged_in, Toast.LENGTH_SHORT).show();
     }
 
     private void checkWiFi() {
-        if (isConnected()) {
-            if (RelayrSdk.isUserLoggedIn()) {
-                loadUserInfo();
+        if (isConnected()) checkUserState();
+        else showNetworkDialog();
+    }
+
+    private void checkUserState() {
+        if (RelayrSdk.isUserLoggedIn()) {
+            loadUserInfo();
+        } else {
+            if (logInStarted) {
+                onBackPressed();
             } else {
+                logInStarted = true;
                 RelayrSdk.logIn(this, this);
             }
-        } else {
-            showNetworkDialog();
         }
     }
 
@@ -143,11 +150,10 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
     private void setSensorListLayout(ListView sensorList) {
         sensorList.setAdapter(new DeviceAdapter(this, mAccelerometers));
-
         sensorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (Database.isDeviceSaved(mAccelerometers.get(i))) {
+                if (Database.isDeviceSaved(mAccelerometers.get(i).id)) {
                     startActivity(new Intent(CantTouchThisActivity.this, SafeDeviceActivity.class));
                 } else {
                     mSelectedSensor = i;
@@ -233,7 +239,6 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override
@@ -251,27 +256,17 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void checkData(Reading reading) {
-        if (!Database.isAlarmOn() || !Database.isWatchingObject()) {
-            return;
-        }
+        if (!Database.isAlarmOn() || !Database.isWatchingObject()) return;
 
-        if (SensitivityUtil.isReadingChanged(reading)) {
+        if (SensitivityUtil.isReadingChanged(reading))
             startActivity(new Intent(CantTouchThisActivity.this, AlarmActivity.class));
-        }
     }
 
     private void unSubscribeToUpdates() {
-        if (!mUserInfoSubscription.isUnsubscribed()) {
-            mUserInfoSubscription.unsubscribe();
-        }
-        if (!mDeviceSubscription.isUnsubscribed()) {
-            mDeviceSubscription.unsubscribe();
-        }
-        if (!mWebSocketSubscription.isUnsubscribed()) {
-            mWebSocketSubscription.unsubscribe();
-            if (mDevice != null) {
-                RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
-            }
-        }
+        if (!mUserInfoSubscription.isUnsubscribed()) mUserInfoSubscription.unsubscribe();
+        if (!mDeviceSubscription.isUnsubscribed()) mDeviceSubscription.unsubscribe();
+        if (!mWebSocketSubscription.isUnsubscribed()) mWebSocketSubscription.unsubscribe();
+
+        if (mDevice != null) RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
     }
 }

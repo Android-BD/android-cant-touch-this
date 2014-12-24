@@ -15,25 +15,23 @@ import io.relayr.model.Device;
 
 public class DeviceAdapter extends ArrayAdapter<Device> {
 
-    private final List<Device> devices;
-    private final Context context;
+    private final List<Device> mDevices;
+    private final Context mContext;
 
     public DeviceAdapter(Context context, List<Device> devices) {
-        super(context, R.layout.cant_touch_this_list_device, devices);
+        super(context, R.layout.list_device, devices);
 
-        this.context = context;
-        this.devices = devices;
+        this.mContext = context;
+        this.mDevices = devices;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView view = (TextView) View.inflate(context, R.layout.cant_touch_this_list_device, null);
+        TextView view = (TextView) View.inflate(mContext, R.layout.list_device, null);
 
-        if (devices.get(position).id.equals(Database.getObjectId())) {
-            view.setText(Database.getObjectName());
-        } else {
-            view.setText(context.getString(R.string.sensor_name_prefix) + position);
-        }
+        String id = mDevices.get(position).id;
+        if (id.equals(Database.getObjectId())) view.setText(Database.getObjectName());
+        else view.setText(mContext.getString(R.string.sensor_name_prefix) + position);
 
         return view;
     }

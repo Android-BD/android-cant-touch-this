@@ -18,7 +18,7 @@ public class SettingsActivity extends Activity {
     private final int SENSOR_REASSIGN_RESULT = 12;
 
     private SeekBar mVolumeSeek;
-    private TextView mSensitivityValueTv;
+    private TextView mSensitivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class SettingsActivity extends Activity {
         setContentView(R.layout.settings_activity);
 
         mVolumeSeek = (SeekBar) findViewById(R.id.sa_volume_seek_bar);
-        mSensitivityValueTv = (TextView) findViewById(R.id.sa_alarm_sensitivity_value);
+        mSensitivity = (TextView) findViewById(R.id.sa_alarm_sensitivity_value);
     }
 
     @Override
@@ -62,14 +62,14 @@ public class SettingsActivity extends Activity {
 
         int sensitivity = (int) (Database.getSensitivity() * 2f);
 
-        mSensitivityValueTv.setText(sensitivity + "");
+        mSensitivity.setText(sensitivity + "");
 
         SeekBar mThresholdSeek = (SeekBar) findViewById(R.id.sa_threshold_seek_bar);
         mThresholdSeek.setProgress(sensitivity);
         mThresholdSeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                mSensitivityValueTv.setText(seekBar.getProgress() + "");
+                mSensitivity.setText(seekBar.getProgress() + "");
             }
 
             @Override

@@ -11,7 +11,7 @@ import com.relayr.cannottouchthis.storage.Database;
 
 public class SafeDeviceActivity extends Activity {
 
-    private TextView mObjectNameTV;
+    private TextView mObjectName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,14 +19,14 @@ public class SafeDeviceActivity extends Activity {
 
         setContentView(R.layout.safe_device_activity);
 
-        mObjectNameTV = (TextView) findViewById(R.id.ss_object_name_tv);
+        mObjectName = (TextView) findViewById(R.id.ss_object_name_tv);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        mObjectNameTV.setText(Database.getObjectName());
+        mObjectName.setText(Database.getObjectName());
     }
 
     /** Called from the xml */

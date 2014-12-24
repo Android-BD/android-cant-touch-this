@@ -8,22 +8,20 @@ import io.relayr.model.Reading;
 public class SensitivityUtil {
 
     private static float mPrevValue = -1f;
-    private static float mThreshold;
+    private static float mSensitivity;
 
     //Used for filtering mocked accelerometer values in debug mode
     private static int mDebugAlarmsCounter = 0;
 
     static {
-        thresholdChanged();
+        updateSensitivity();
     }
 
-    public static void thresholdChanged() {
-        mThreshold = Database.getSensitivity();
-        if (mThreshold == Database.MAX_SENSITIVITY) {
-            mThreshold = 0.2f;
-        } else {
-            mThreshold = Database.MAX_SENSITIVITY - mThreshold;
-        }
+    public static void updateSensitivity() {
+        mSensitivity = Database.getSensitivity();
+
+        if (mSensitivity == Database.MAX_SENSITIVITY) mSensitivity = 0.2f;
+        else mSensitivity = Database.MAX_SENSITIVITY - mSensitivity;
     }
 
     public static boolean isReadingChanged(Reading reading) {
@@ -31,11 +29,9 @@ public class SensitivityUtil {
                 Math.abs(reading.accel.y * 10) +
                 Math.abs(reading.accel.z * 10);
 
-        if (mPrevValue == -1f) {
-            mPrevValue = value;
-        }
+        if (mPrevValue == -1f) mPrevValue = value;
 
-        boolean isAlarm = value < mPrevValue - mThreshold || value > mPrevValue + mThreshold;
+        boolean isAlarm = value < mPrevValue - mSensitivity || value > mPrevValue + mSensitivity;
 
         mPrevValue = value;
 

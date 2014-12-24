@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.relayr.cannottouchthis.R;
 
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class IntroActivity extends Activity {
@@ -18,8 +17,7 @@ public class IntroActivity extends Activity {
 
         setContentView(R.layout.intro_activity);
 
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.schedule(new Runnable() {
+        Executors.newSingleThreadScheduledExecutor().schedule(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(IntroActivity.this, CantTouchThisActivity.class));

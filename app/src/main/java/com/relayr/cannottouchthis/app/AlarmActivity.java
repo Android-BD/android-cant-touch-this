@@ -15,8 +15,8 @@ import java.util.Calendar;
 
 public class AlarmActivity extends Activity {
 
-    private TextView mObjectNameTv;
-    private TextView mDateTimeTv;
+    private TextView mObjectName;
+    private TextView mDateTime;
     private MediaPlayer mMediaPlayer;
 
     @Override
@@ -25,8 +25,8 @@ public class AlarmActivity extends Activity {
 
         setContentView(R.layout.alarm_activity);
 
-        mObjectNameTv = (TextView) findViewById(R.id.aa_object_name_tv);
-        mDateTimeTv = (TextView) findViewById(R.id.aa_date_time_tv);
+        mObjectName = (TextView) findViewById(R.id.aa_object_name_tv);
+        mDateTime = (TextView) findViewById(R.id.aa_date_time_tv);
 
         if (Database.isSoundAlarm()) {
             mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.hammer_alarm);
@@ -38,9 +38,9 @@ public class AlarmActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        mObjectNameTv.setText(Database.getObjectName());
+        mObjectName.setText(Database.getObjectName());
 
-        mDateTimeTv.setText(String.format("ON %1$tD AT %1$tI:%1$tM", Calendar.getInstance()));
+        mDateTime.setText(String.format("ON %1$tD AT %1$tI:%1$tM", Calendar.getInstance()));
 
         if (Database.isSoundAlarm()) {
             mMediaPlayer.setVolume(Database.getVolume(), Database.getVolume());
@@ -52,9 +52,7 @@ public class AlarmActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
-        if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
-        }
+        if (mMediaPlayer != null) mMediaPlayer.stop();
     }
 
     /**

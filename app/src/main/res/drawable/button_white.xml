@@ -12,5 +12,6 @@
         android:top="12dp"
         android:right="10dp"
         android:bottom="12dp" />
+
     <corners android:radius="@dimen/button_border_corner_radius" />
 </shape>

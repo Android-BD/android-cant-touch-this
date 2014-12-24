@@ -11,7 +11,6 @@
         android:drawableLeft="@drawable/ic_action_back"
         android:background="@color/background_dark"
         android:text="@string/sa_title_settings"
-        style="@style/BoldText"
         android:textColor="@android:color/white"
         android:gravity="center_vertical"
         android:drawablePadding="@dimen/activity_title_padding"
@@ -19,7 +18,8 @@
         android:textSize="@dimen/activity_title_text_size"
         android:onClick="onBackClick"
         android:clickable="true"
-        android:enabled="true" />
+        android:enabled="true"
+        style="@style/BoldText"/>
 
     <ScrollView
         android:layout_height="match_parent"
@@ -131,8 +131,8 @@
                 android:layout_gravity="center_horizontal"
                 android:enabled="true"
                 android:clickable="true"
-                style="@style/BoldText"
-                android:onClick="onReAssignSensorClick" />
+                android:onClick="onReAssignSensorClick"
+                style="@style/BoldText"/>
 
             <io.relayr.commons.widget.CustomButton
                 android:layout_width="wrap_content"
@@ -149,8 +149,8 @@
                 android:layout_gravity="center_horizontal"
                 android:enabled="true"
                 android:clickable="true"
-                style="@style/BoldText"
-                android:onClick="onLogOutClick" />
+                android:onClick="onLogOutClick"
+                style="@style/BoldText"/>
 
         </LinearLayout>
     </ScrollView>

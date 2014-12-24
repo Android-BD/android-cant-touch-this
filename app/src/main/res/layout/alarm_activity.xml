@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/red_background">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/red_background">
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -13,7 +13,7 @@
         android:paddingRight="20dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:onClick="onSettingsClick" />
+        android:onClick="onSettingsClick"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,57 +26,57 @@
             android:layout_height="wrap_content"
             android:text="@string/aa_alarm_exclamation"
             android:textAllCaps="true"
-            style="@style/BoldText"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textSize="@dimen/aa_alarm"
             android:layout_gravity="center"
-            android:padding="5dp" />
+            android:padding="5dp"
+            style="@style/BoldText"/>
 
         <io.relayr.commons.widget.CustomTextView
             android:id="@+id/aa_date_time_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
-            style="@style/BoldText"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:textSize="@dimen/aa_date_time_text_size"
             android:layout_gravity="center"
-            android:padding="5dp" />
+            android:padding="5dp"
+            style="@style/BoldText"/>
 
         <io.relayr.commons.widget.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAllCaps="true"
             android:text="@string/aa_someone"
-            style="@style/BoldText"
             android:textColor="@android:color/white"
             android:textSize="@dimen/aa_someone_text_size"
             android:layout_gravity="center"
-            android:padding="5dp" />
+            android:padding="5dp"
+            style="@style/BoldText"/>
 
         <io.relayr.commons.widget.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/aa_touched_your"
             android:textAllCaps="true"
-            style="@style/BoldText"
             android:textColor="@android:color/white"
             android:textSize="@dimen/aa_touched_your_text_size"
             android:layout_gravity="center"
-            android:padding="5dp" />
+            android:padding="5dp"
+            style="@style/BoldText"/>
 
         <io.relayr.commons.widget.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/aa_object_name_tv"
-            style="@style/BoldText"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:textSize="@dimen/aa_object_name_text_size"
             android:layout_gravity="center"
-            android:padding="5dp" />
+            android:padding="5dp"
+            style="@style/BoldText"/>
 
         <io.relayr.commons.widget.CustomButton
             android:layout_width="wrap_content"
@@ -89,11 +89,11 @@
             android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal"
             android:text="@string/dismiss"
-            style="@style/BoldText"
             android:onClick="onDismissClicked"
             android:enabled="true"
             android:clickable="true"
-            android:textAllCaps="true" />
+            android:textAllCaps="true"
+            style="@style/BoldText"/>
 
     </LinearLayout>
 </RelativeLayout>

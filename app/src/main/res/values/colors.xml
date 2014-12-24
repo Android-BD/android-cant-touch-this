@@ -4,10 +4,6 @@
     <color name="background">#2B434A</color>
     <color name="background_dark">#22353B</color>
 
-    <color name="gray_background">#333</color>
-
-    <color name="black_transparent_hard">#AA000000</color>
-
     <color name="gray">#333333</color>
 
     <color name="gray_text">#888888</color>

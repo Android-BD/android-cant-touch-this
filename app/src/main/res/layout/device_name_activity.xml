@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background">
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background">
 
     <io.relayr.commons.widget.CustomTextView
         android:id="@+id/dna_title"
@@ -17,7 +16,7 @@
         android:textSize="@dimen/activity_title_text_size"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        style="@style/BoldText" />
+        style="@style/BoldText"/>
 
     <EditText
         android:id="@+id/dna_sensor_name_et"
@@ -46,7 +45,7 @@
         android:textSize="@dimen/device_name_protecting_text_size"
         android:textColor="@android:color/white"
         android:text="@string/dna_what_are_you_protecting"
-        style="@style/BoldText" />
+        style="@style/BoldText"/>
 
     <io.relayr.commons.widget.CustomButton
         android:layout_width="wrap_content"
@@ -60,10 +59,10 @@
         android:onClick="onDoneClicked"
         android:enabled="true"
         android:clickable="true"
-        style="@style/BoldText"
         android:background="@drawable/button_white"
         android:textColor="@android:color/white"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        style="@style/BoldText"/>
 
 </RelativeLayout>
