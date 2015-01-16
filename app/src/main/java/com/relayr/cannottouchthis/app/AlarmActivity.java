@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class AlarmActivity extends Activity {
@@ -29,8 +30,8 @@ public class AlarmActivity extends Activity {
         mDateTime = (TextView) findViewById(R.id.aa_date_time_tv);
 
         if (Database.isSoundAlarm()) {
-            mMediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.hammer_alarm);
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mMediaPlayer = MediaPlayer.create(this, R.raw.hammer_alarm);
+            mMediaPlayer.setVolume(Database.getVolume(), Database.getVolume());
         }
     }
 
@@ -43,8 +44,12 @@ public class AlarmActivity extends Activity {
         mDateTime.setText(String.format("ON %1$tD AT %1$tI:%1$tM", Calendar.getInstance()));
 
         if (Database.isSoundAlarm()) {
-            mMediaPlayer.setVolume(Database.getVolume(), Database.getVolume());
-            mMediaPlayer.start();
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mMediaPlayer.start();
+                }
+            });
         }
     }
 
@@ -52,7 +57,7 @@ public class AlarmActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
-        if (mMediaPlayer != null) mMediaPlayer.stop();
+        if (mMediaPlayer != null) mMediaPlayer.reset();
     }
 
     /**

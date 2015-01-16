@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -45,7 +46,6 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
     private Subscription mUserInfoSubscription = Subscriptions.empty();
     private Subscription mDeviceSubscription = Subscriptions.empty();
-    private Subscription mWebSocketSubscription = Subscriptions.empty();
     private TransmitterDevice mDevice;
 
     private AlertDialog mNetworkDialog;
@@ -154,9 +154,13 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (Database.isDeviceSaved(mAccelerometers.get(i).id)) {
+                    subscribeForAccelerometerUpdates(mAccelerometers.get(i));
+
                     startActivity(new Intent(CantTouchThisActivity.this, SafeDeviceActivity.class));
                 } else {
                     mSelectedSensor = i;
+
+                    subscribeForAccelerometerUpdates(mAccelerometers.get(mSelectedSensor));
 
                     startActivityForResult(new Intent(CantTouchThisActivity.this,
                             DeviceNameActivity.class), SENSOR_NAME_RESULT);
@@ -171,8 +175,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void loadUserInfo() {
-        mUserInfoSubscription = RelayrSdk.getRelayrApi()
-                .getUserInfo()
+        mUserInfoSubscription = RelayrSdk.getRelayrApi().getUserInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<User>() {
@@ -194,8 +197,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void loadAccelerometerDevices(String userId) {
-        mDeviceSubscription = RelayrSdk.getRelayrApi()
-                .getUserDevices(userId)
+        mDeviceSubscription = RelayrSdk.getRelayrApi().getUserDevices(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Device>>() {
@@ -221,22 +223,21 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         mAccelerometers.clear();
 
         for (Device device : devices) {
-            if (device.getModel().getId().equals(DeviceModel.ACCELEROMETER_GYROSCOPE.getId())) {
+            if (device.getModel().getId().equals(DeviceModel.ACCELEROMETER_GYROSCOPE.getId()))
                 mAccelerometers.add(device);
-                subscribeForAccelerometerUpdates(device);
-            }
         }
 
         refreshSensorLayout(mAccelerometers.isEmpty());
     }
 
     private void subscribeForAccelerometerUpdates(Device device) {
+        Log.e("TAG", "Subscribed");
+        
         mDevice = new TransmitterDevice(device.id, device.getSecret(),
                 device.getOwner(), device.getName(), device.getModel().getId());
 
-        mWebSocketSubscription = RelayrSdk.getWebSocketClient()
-                .subscribe(mDevice, new Subscriber<Object>() {
-
+        RelayrSdk.getWebSocketClient().subscribe(mDevice)
+                .subscribe(new Subscriber<Object>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -265,7 +266,6 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     private void unSubscribeToUpdates() {
         if (!mUserInfoSubscription.isUnsubscribed()) mUserInfoSubscription.unsubscribe();
         if (!mDeviceSubscription.isUnsubscribed()) mDeviceSubscription.unsubscribe();
-        if (!mWebSocketSubscription.isUnsubscribed()) mWebSocketSubscription.unsubscribe();
 
         if (mDevice != null) RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
     }
