@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -23,20 +22,20 @@ import com.relayr.cannottouchthis.util.SensitivityUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.relayr.LoginEventListener;
 import io.relayr.RelayrSdk;
+import io.relayr.model.AccelGyroscope;
 import io.relayr.model.Device;
 import io.relayr.model.DeviceModel;
 import io.relayr.model.Reading;
-import io.relayr.model.TransmitterDevice;
 import io.relayr.model.User;
+import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
-public class CantTouchThisActivity extends Activity implements LoginEventListener {
+public class CantTouchThisActivity extends Activity {
 
     private final int SENSOR_NAME_RESULT = 11;
 
@@ -46,7 +45,7 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
     private Subscription mUserInfoSubscription = Subscriptions.empty();
     private Subscription mDeviceSubscription = Subscriptions.empty();
-    private TransmitterDevice mDevice;
+    private Device mDevice;
 
     private AlertDialog mNetworkDialog;
 
@@ -95,18 +94,6 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
         if (mNetworkDialog != null) mNetworkDialog.dismiss();
     }
 
-    @Override
-    public void onSuccessUserLogIn() {
-        logInStarted = false;
-        Toast.makeText(this, R.string.successfully_logged_in, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onErrorLogin(Throwable e) {
-        logInStarted = false;
-        Toast.makeText(this, R.string.unsuccessfully_logged_in, Toast.LENGTH_SHORT).show();
-    }
-
     private void checkWiFi() {
         if (isConnected()) checkUserState();
         else showNetworkDialog();
@@ -120,7 +107,25 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
                 onBackPressed();
             } else {
                 logInStarted = true;
-                RelayrSdk.logIn(this, this);
+                RelayrSdk.logIn(this).subscribe(new Observer<User>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        logInStarted = false;
+                        Toast.makeText(CantTouchThisActivity.this,
+                                R.string.unsuccessfully_logged_in, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(User user) {
+                        logInStarted = false;
+                        Toast.makeText(CantTouchThisActivity.this,
+                                R.string.successfully_logged_in, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
     }
@@ -176,7 +181,6 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
 
     private void loadUserInfo() {
         mUserInfoSubscription = RelayrSdk.getRelayrApi().getUserInfo()
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<User>() {
                     @Override
@@ -231,13 +235,9 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
     }
 
     private void subscribeForAccelerometerUpdates(Device device) {
-        Log.e("TAG", "Subscribed");
-        
-        mDevice = new TransmitterDevice(device.id, device.getSecret(),
-                device.getOwner(), device.getName(), device.getModel().getId());
-
-        RelayrSdk.getWebSocketClient().subscribe(mDevice)
-                .subscribe(new Subscriber<Object>() {
+        device.subscribeToCloudReadings()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Reading>() {
                     @Override
                     public void onCompleted() {
                     }
@@ -246,27 +246,31 @@ public class CantTouchThisActivity extends Activity implements LoginEventListene
                     public void onError(Throwable e) {
                         Toast.makeText(CantTouchThisActivity.this, R.string.err_socket_problem,
                                 Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
                     }
 
                     @Override
-                    public void onNext(Object o) {
-                        Reading reading = new Gson().fromJson(o.toString(), Reading.class);
-                        checkData(reading);
+                    public void onNext(Reading reading) {
+                        if (reading.meaning.equals("acceleration")) {
+                            AccelGyroscope.Acceleration acc = new Gson().fromJson(reading.value.toString(),
+                                    AccelGyroscope.Acceleration.class);
+                            checkData(acc);
+                        }
                     }
                 });
     }
 
-    private void checkData(Reading reading) {
+    private void checkData(AccelGyroscope.Acceleration acceleration) {
         if (!Database.isAlarmOn() || !Database.isWatchingObject()) return;
 
-        if (SensitivityUtil.isReadingChanged(reading))
+        if (SensitivityUtil.isReadingChanged(acceleration))
             startActivity(new Intent(CantTouchThisActivity.this, AlarmActivity.class));
     }
 
     private void unSubscribeToUpdates() {
-        if (!mUserInfoSubscription.isUnsubscribed()) mUserInfoSubscription.unsubscribe();
-        if (!mDeviceSubscription.isUnsubscribed()) mDeviceSubscription.unsubscribe();
+        mUserInfoSubscription.unsubscribe();
+        mDeviceSubscription.unsubscribe();
 
-        if (mDevice != null) RelayrSdk.getWebSocketClient().unSubscribe(mDevice.id);
+        if (mDevice != null) mDevice.unSubscribeToCloudReadings();
     }
 }
