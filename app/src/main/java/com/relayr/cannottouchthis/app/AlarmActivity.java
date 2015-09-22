@@ -60,16 +60,12 @@ public class AlarmActivity extends Activity {
         if (mMediaPlayer != null) mMediaPlayer.reset();
     }
 
-    /**
-     * Called from the xml
-     */
+    /** Called from the xml */
     public void onDismissClicked(View view) {
         finish();
     }
 
-    /**
-     * Called from the xml
-     */
+    /** Called from the xml */
     public void onSettingsClick(View view) {
         startActivity(new Intent(this, SettingsActivity.class));
         finish();

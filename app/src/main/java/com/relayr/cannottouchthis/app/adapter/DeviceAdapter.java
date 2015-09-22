@@ -11,7 +11,8 @@ import com.relayr.cannottouchthis.storage.Database;
 
 import java.util.List;
 
-import io.relayr.model.Device;
+import io.relayr.java.model.Device;
+
 
 public class DeviceAdapter extends ArrayAdapter<Device> {
 
@@ -29,7 +30,7 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view = (TextView) View.inflate(mContext, R.layout.list_device, null);
 
-        String id = mDevices.get(position).id;
+        String id = mDevices.get(position).getId();
         if (id.equals(Database.getObjectId())) view.setText(Database.getObjectName());
         else view.setText(mContext.getString(R.string.sensor_name_prefix) + position);
 

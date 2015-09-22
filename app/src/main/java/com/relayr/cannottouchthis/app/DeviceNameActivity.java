@@ -28,7 +28,6 @@ public class DeviceNameActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) saveObjectName();
-
                 return false;
             }
         });
@@ -44,7 +43,7 @@ public class DeviceNameActivity extends Activity {
     }
 
     public void onDoneClicked(View v) {
-        if (mSensorName.getText().toString().isEmpty()) {
+        if (mSensorName.getText().toString().isEmpty())
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dna_dialog_title))
                     .setMessage(getString(R.string.dna_dialog_message))
@@ -54,9 +53,8 @@ public class DeviceNameActivity extends Activity {
                             dialogInterface.dismiss();
                         }
                     }).show();
-        } else {
+        else
             saveObjectName();
-        }
     }
 
     private void saveObjectName() {

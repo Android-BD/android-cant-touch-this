@@ -17,17 +17,18 @@ import com.google.gson.Gson;
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.app.adapter.DeviceAdapter;
 import com.relayr.cannottouchthis.storage.Database;
+import com.relayr.cannottouchthis.util.AppLauncher;
 import com.relayr.cannottouchthis.util.SensitivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.relayr.RelayrSdk;
-import io.relayr.model.AccelGyroscope;
-import io.relayr.model.Device;
-import io.relayr.model.DeviceModel;
-import io.relayr.model.Reading;
-import io.relayr.model.User;
+import io.relayr.android.RelayrSdk;
+import io.relayr.java.model.AccelGyroscope;
+import io.relayr.java.model.Device;
+import io.relayr.java.model.User;
+import io.relayr.java.model.action.Reading;
+import io.relayr.java.model.models.error.DeviceModelsCacheException;
 import rx.Observer;
 import rx.Subscriber;
 import rx.Subscription;
@@ -48,6 +49,7 @@ public class CantTouchThisActivity extends Activity {
     private Device mDevice;
 
     private AlertDialog mNetworkDialog;
+    private AlertDialog mLauncherDialog;
 
     private boolean logInStarted = false;
 
@@ -65,7 +67,6 @@ public class CantTouchThisActivity extends Activity {
         super.onResume();
 
         checkWiFi();
-
         setSensorListLayout(mSensorList);
     }
 
@@ -81,7 +82,7 @@ public class CantTouchThisActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (SENSOR_NAME_RESULT == requestCode && RESULT_OK == resultCode) {
-            Database.setObjectId(mAccelerometers.get(mSelectedSensor).id);
+            Database.setObjectId(mAccelerometers.get(mSelectedSensor).getId());
 
             startActivity(new Intent(this, SafeDeviceActivity.class));
         }
@@ -92,6 +93,7 @@ public class CantTouchThisActivity extends Activity {
         super.onPause();
 
         if (mNetworkDialog != null) mNetworkDialog.dismiss();
+        if (mLauncherDialog != null) mLauncherDialog.dismiss();
     }
 
     private void checkWiFi() {
@@ -108,19 +110,15 @@ public class CantTouchThisActivity extends Activity {
             } else {
                 logInStarted = true;
                 RelayrSdk.logIn(this).subscribe(new Observer<User>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+                    @Override public void onCompleted() {}
 
-                    @Override
-                    public void onError(Throwable e) {
+                    @Override public void onError(Throwable e) {
                         logInStarted = false;
                         Toast.makeText(CantTouchThisActivity.this,
                                 R.string.unsuccessfully_logged_in, Toast.LENGTH_SHORT).show();
                     }
 
-                    @Override
-                    public void onNext(User user) {
+                    @Override public void onNext(User user) {
                         logInStarted = false;
                         Toast.makeText(CantTouchThisActivity.this,
                                 R.string.successfully_logged_in, Toast.LENGTH_SHORT).show();
@@ -158,7 +156,7 @@ public class CantTouchThisActivity extends Activity {
         sensorList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (Database.isDeviceSaved(mAccelerometers.get(i).id)) {
+                if (Database.isDeviceSaved(mAccelerometers.get(i).getId())) {
                     subscribeForAccelerometerUpdates(mAccelerometers.get(i));
 
                     startActivity(new Intent(CantTouchThisActivity.this, SafeDeviceActivity.class));
@@ -177,47 +175,59 @@ public class CantTouchThisActivity extends Activity {
     private void refreshSensorLayout(boolean sensorsEmpty) {
         findViewById(R.id.ctta_sensor_list).setVisibility(sensorsEmpty ? View.GONE : View.VISIBLE);
         findViewById(R.id.ctta_empty_sensor_label).setVisibility(sensorsEmpty ? View.VISIBLE : View.GONE);
+
+        if (sensorsEmpty) {
+            mLauncherDialog = new AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setTitle(getString(R.string.ctta_empty_sensor_list))
+                    .setMessage(R.string.ctta_empty_sensor_list_message)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int i) {
+                            dialog.dismiss();
+                            AppLauncher.openApp(CantTouchThisActivity.this, "io.relayr.wunderbar");
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            finish();
+                        }
+                    })
+                    .show();
+        }
     }
 
     private void loadUserInfo() {
-        mUserInfoSubscription = RelayrSdk.getRelayrApi().getUserInfo()
+        mUserInfoSubscription = RelayrSdk.getUser()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<User>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+                    @Override public void onCompleted() {}
 
-                    @Override
-                    public void onError(Throwable e) {
+                    @Override public void onError(Throwable e) {
                         Toast.makeText(CantTouchThisActivity.this, R.string.err_loading_user_data,
                                 Toast.LENGTH_SHORT).show();
                     }
 
-                    @Override
-                    public void onNext(User user) {
-                        loadAccelerometerDevices(user.id);
+                    @Override public void onNext(User user) {
+                        loadAccelerometerDevices(user);
                     }
                 });
     }
 
-    private void loadAccelerometerDevices(String userId) {
-        mDeviceSubscription = RelayrSdk.getRelayrApi().getUserDevices(userId)
+    private void loadAccelerometerDevices(User user) {
+        mDeviceSubscription = user.getDevices()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<Device>>() {
 
-                    @Override
-                    public void onCompleted() {
-                    }
+                    @Override public void onCompleted() {}
 
-                    @Override
-                    public void onError(Throwable e) {
+                    @Override public void onError(Throwable e) {
                         Toast.makeText(CantTouchThisActivity.this, R.string.err_loading_devices,
                                 Toast.LENGTH_SHORT).show();
                     }
 
-                    @Override
-                    public void onNext(List<Device> devices) {
+                    @Override public void onNext(List<Device> devices) {
                         filterAccelerometers(devices);
                     }
                 });
@@ -226,31 +236,34 @@ public class CantTouchThisActivity extends Activity {
     private void filterAccelerometers(List<Device> devices) {
         mAccelerometers.clear();
 
-        for (Device device : devices) {
-            if (device.getModel().getId().equals(DeviceModel.ACCELEROMETER_GYROSCOPE.getId()))
-                mAccelerometers.add(device);
+        String modelId = null;
+        try {
+            modelId = RelayrSdk.getDeviceModelsCache().getModelByName("Wunderbar Accelerometer", false, true).getId();
+        } catch (DeviceModelsCacheException e) {
+            e.printStackTrace();
         }
+
+        for (Device device : devices)
+            if (device.getModelId() != null && device.getModelId().equals(modelId))
+                mAccelerometers.add(device);
 
         refreshSensorLayout(mAccelerometers.isEmpty());
     }
 
     private void subscribeForAccelerometerUpdates(Device device) {
+        mDevice = device;
         device.subscribeToCloudReadings()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Reading>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+                    @Override public void onCompleted() {}
 
-                    @Override
-                    public void onError(Throwable e) {
+                    @Override public void onError(Throwable e) {
                         Toast.makeText(CantTouchThisActivity.this, R.string.err_socket_problem,
                                 Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
 
-                    @Override
-                    public void onNext(Reading reading) {
+                    @Override public void onNext(Reading reading) {
                         if (reading.meaning.equals("acceleration")) {
                             AccelGyroscope.Acceleration acc = new Gson().fromJson(reading.value.toString(),
                                     AccelGyroscope.Acceleration.class);

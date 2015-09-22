@@ -3,7 +3,7 @@ package com.relayr.cannottouchthis.util;
 import com.relayr.cannottouchthis.RelayrSdkInitializer;
 import com.relayr.cannottouchthis.storage.Database;
 
-import io.relayr.model.AccelGyroscope;
+import io.relayr.java.model.AccelGyroscope;
 
 public class SensitivityUtil {
 

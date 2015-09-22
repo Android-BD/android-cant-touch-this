@@ -87,45 +87,33 @@ public class SettingsActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (SENSOR_REASSIGN_RESULT == requestCode && RESULT_OK == resultCode) {
-            finish();
-        }
+        if (SENSOR_REASSIGN_RESULT == requestCode && RESULT_OK == resultCode) finish();
     }
 
-    /**
-     * Called from the xml
-     */
+    /** Called from the xml */
     public void onAlarmSwitchClick(View view) {
         Database.setAlarm(((Switch) view).isChecked());
     }
 
-    /**
-     * Called from the xml
-     */
+    /** Called from the xml */
     public void onSoundSwitchClick(View view) {
         boolean checked = ((Switch) view).isChecked();
         Database.setSoundAlarm(checked);
         mVolumeSeek.setEnabled(checked);
     }
 
-    /**
-     * Called from the xml
-     */
+    /** Called from the xml */
     public void onBackClick(View view) {
         finish();
     }
 
-    /**
-     * Called from the xml
-     */
+    /** Called from the xml */
     public void onReAssignSensorClick(View view) {
         startActivityForResult(new Intent(SettingsActivity.this, DeviceNameActivity.class),
                 SENSOR_REASSIGN_RESULT);
     }
 
-    /**
-     * Called from the xml
-     */
+    /** Called from the xml */
     public void onLogOutClick(View view) {
         RelayrSdk.logOut();
         startActivity(new Intent(SettingsActivity.this, CantTouchThisActivity.class));
