@@ -12,6 +12,11 @@ android {
         versionName "1.0.6"
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     sourceSets {
         production {
             java.srcDirs = ['src/release/java']
@@ -35,7 +40,7 @@ android {
 }
 
 dependencies {
-    compile 'io.relayr:android-sdk:1.0.0'
-    provided 'io.relayr:java-sdk:1.0.1'
+    compile 'io.relayr:android-sdk:1.0.2'
+    compile 'io.relayr:java-sdk:1.0.2'
     compile 'io.relayr:android-commons:1.1.0'
 }

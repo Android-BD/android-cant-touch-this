@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.relayr.cannottouchthis.R;
 import com.relayr.cannottouchthis.storage.Database;
 
-import io.relayr.RelayrSdk;
+import io.relayr.android.RelayrSdk;
 
 public class SettingsActivity extends Activity {
 

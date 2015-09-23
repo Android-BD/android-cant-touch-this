@@ -41,7 +41,7 @@ public class CantTouchThisActivity extends Activity {
     private final int SENSOR_NAME_RESULT = 11;
 
     private ListView mSensorList;
-    private List<Device> mAccelerometers = new ArrayList<>();
+    private List<Device> mAccelerometers = new ArrayList<Device>();
     private int mSelectedSensor = -1;
 
     private Subscription mUserInfoSubscription = Subscriptions.empty();

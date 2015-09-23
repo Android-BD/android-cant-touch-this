@@ -2,7 +2,7 @@ package com.relayr.cannottouchthis;
 
 import android.content.Context;
 
-import io.relayr.RelayrSdk;
+import io.relayr.android.RelayrSdk;
 
 public abstract class RelayrSdkInitializer {
 
